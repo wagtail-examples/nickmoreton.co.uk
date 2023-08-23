@@ -1,0 +1,17 @@
+// lists
+
+ul, ol {
+  margin: 0 0 $base-line-height 0;
+  padding: 0;
+  list-style: none;
+}
+
+ul li {
+    list-style-type: disc;
+    margin-left: 2rem;
+}
+
+ol li {
+    list-style-type: decimal;
+    margin-left: 2rem;
+}

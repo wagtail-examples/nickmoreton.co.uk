@@ -1,2 +1,22 @@
-$background-color: #43b1b0;
-$foreground-color: #fff;
+// colors
+$primary-color: #023047;
+$secondary-color: #ffb703;
+$tertiary-color: #fb8500;
+$accent-color: #219EBC;
+$highlight-color: #8ECAE6;
+
+$text-color: lighten($highlight-color, 20%);
+
+$background-color: $primary-color;
+
+// fonts
+$base-font-family: 'REM', sans-serif;
+$base-font-size: 1.6rem;
+$base-line-height: 1.5;
+$base-font-color: $text-color;
+
+$font-bold: 600;
+
+// displays
+$tablet-breakpoint: 768px;
+$desktop-breakpoint: 1280px;

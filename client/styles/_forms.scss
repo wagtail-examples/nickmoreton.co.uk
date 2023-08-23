@@ -1,0 +1,47 @@
+// forms
+
+input[type=text],
+input[type=email],
+input[type=password],
+input[type=number],
+input[type=url],
+input[type=tel],
+input[type=search],
+textarea
+{
+    border: 1px solid $text-color;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    font-size: 1.6rem;
+    color: $text-color;
+    background-color: transparent;
+    &:focus {
+        outline: none;
+        border-color: $accent-color;
+    }
+}
+
+//specials
+input[type=checkbox]
+{
+    margin-right: 1rem;
+}
+
+// buttons
+button,input[type=button],input[type=submit],input[type=reset] {
+    border: 1px solid $tertiary-color;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    font-size: 1.6rem;
+    color: $background-color;
+    background-color: $secondary-color;
+    cursor: pointer;
+    &:focus {
+        outline: none;
+        border-color: $accent-color;
+    }
+    &:hover {
+        background-color: $accent-color;
+        color: $background-color;
+    }
+}
