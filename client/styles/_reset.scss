@@ -26,11 +26,36 @@ body {
   margin: 0;
 }
 
+article {
+  max-width: 800px;
+}
+
 h1,h2,h3,h4,h5,h6 {
   color: darken($text-color, 5%);
   margin: 0 0 1rem 0;
   padding: 0;
   line-height: 1;
+}
+
+h1 {
+  font-size: 3rem;
+  @media screen and (min-width: $tablet-breakpoint) {
+    font-size: 3.5rem;
+  }
+}
+
+h2 {
+  font-size: 2.5rem;
+  @media screen and (min-width: $tablet-breakpoint) {
+    font-size: 3rem;
+  }
+}
+
+h3 {
+  font-size: 2rem;
+  @media screen and (min-width: $tablet-breakpoint) {
+    font-size: 2.5rem;
+  }
 }
 
 table {
@@ -53,5 +78,15 @@ th {
 }
 
 main {
-  padding: 0 2rem;
+  padding: 2rem;
+  max-width: $desktop-breakpoint;
+  @media screen and (min-width: $tablet-breakpoint) {
+    display: grid;
+    grid-template-columns: 8fr 4fr;
+    gap: 10rem;
+  }
+  @media screen and (min-width: $desktop-breakpoint) {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

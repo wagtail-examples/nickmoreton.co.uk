@@ -4,8 +4,10 @@ class TaglineAnimator {
         this.swaps = ["using", "liking", "loving"]
     }
     init() {
-        this.animate();
-        this.animated.innerHTML = this.swaps[0];
+        if (this.animated) {
+            this.animate();
+            this.animated.innerHTML = this.swaps[0];
+        }
     }
     animate() {
         let i = 0;
