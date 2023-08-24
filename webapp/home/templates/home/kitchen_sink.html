@@ -3,7 +3,7 @@
 {% block body_class %}kitchen-sink{% endblock body_class %}
 
 {% block content %}
-<nav>
+{% comment %} <nav> 
 	<figure class="icon">
 		<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32">
 			<title>Nick Moreton</title>
@@ -24,21 +24,19 @@
 		</svg>
 		<div class="name">Nick Moreton</div>
 	</figure>
-	<div class="menu">
-		<a href="#menu">
-			<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-				<g class="nc-icon-wrapper" stroke-width="2" fill="#212121" stroke="#212121">
-					<line data-color="color-2" fill="none" stroke-linecap="square" stroke-miterlimit="10" x1="2" y1="16"
-						x2="30" y2="16" stroke-linejoin="miter"></line>
-					<line fill="none" stroke="#212121" stroke-linecap="square" stroke-miterlimit="10" x1="16" y1="7" x2="30"
-						y2="7" stroke-linejoin="miter"></line>
-					<line fill="none" stroke="#212121" stroke-linecap="square" stroke-miterlimit="10" x1="2" y1="25" x2="16"
-						y2="25" stroke-linejoin="miter"></line>
-				</g>
-			</svg>
-		</a>
+	<div class="menu-switch">
+		<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+			<g class="nc-icon-wrapper" stroke-width="2" fill="#212121" stroke="#212121">
+				<line data-color="color-2" fill="none" stroke-linecap="square" stroke-miterlimit="10" x1="2" y1="16"
+					x2="30" y2="16" stroke-linejoin="miter"></line>
+				<line fill="none" stroke="#212121" stroke-linecap="square" stroke-miterlimit="10" x1="16" y1="7" x2="30"
+					y2="7" stroke-linejoin="miter"></line>
+				<line fill="none" stroke="#212121" stroke-linecap="square" stroke-miterlimit="10" x1="2" y1="25" x2="16"
+					y2="25" stroke-linejoin="miter"></line>
+			</g>
+		</svg>
 	</div>
-	<div class="links">
+	<menu role="menu" id="menu">
 		<ul>
 			<li>
 				<a href="#1">Home<span>&nbsp;</span></a>
@@ -50,12 +48,12 @@
 				<a href="#3">Wagtail Packages<span>&nbsp;</span></a>
 			</li>
 		</ul>
-	</div>
-</nav>
-<header>
-	<h1>Web Developer: using Wagtail CMS</h1>
-</header>
-<main>
+	</menu>
+</nav> {% endcomment %}
+{% comment %} <header>
+	<h1>Web Developer: <span data-animated>using</span> Wagtail CMS</h1>
+</header> {% endcomment %}
+{% comment %} <main> {% endcomment %}
 	<h1>Pushes bear authority pig attention Dunland oaths.</h1>
 	<p>Even the smallest person can change the course of the future. Ered fellow still? Lowly closing money ashamed
 		Shirelings woods feast fresh 100. Lord's few Morgul-rats.</p>
@@ -348,5 +346,5 @@
 			</div>
 		</fieldset>
 	</form>
-</main>
+{% comment %} </main> {% endcomment %}
 {% endblock content %}

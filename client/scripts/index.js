@@ -1,5 +1,9 @@
 import "../styles/index.scss";
-import Logo from "./logo.js";
+import Navigation from "./nav";
+import TaglineAnimator from "./animate";
 
-const logo = new Logo();
-logo.init();
+const nav = new Navigation();
+nav.init();
+
+const tagline = new TaglineAnimator();
+tagline.init();

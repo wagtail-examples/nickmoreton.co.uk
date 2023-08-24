@@ -2,13 +2,30 @@ header {
     overflow: hidden;
     background-image: linear-gradient(to bottom, $secondary-color, $tertiary-color);
     margin: 0 0 2rem 0;
-    padding: 10rem 2rem;
-    box-shadow: 0 0 10rem rgba(0, 0, 0, 0.2);
+    padding: 2rem 2rem;
+    box-shadow: 10 0 3rem rgba(0, 0, 0, 0.2);
     color: $background-color;
     h1 {
         font-size: 4rem;
         margin: 2rem 0;
         color: darken($tertiary-color, 20%);
         text-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+        [data-animated] {
+            display: inline-block;
+            text-align: center;
+            width: 120px;
+            &.finished {
+                color: rgba(white, .85);
+            }
+        }
+    }
+    @media screen and (min-width: $tablet-breakpoint) {
+        padding: 8rem 4rem;
+        h1 {
+            font-size: 5rem;
+            [data-animated] {
+                width: 150px;
+            }
+        }
     }
 }
