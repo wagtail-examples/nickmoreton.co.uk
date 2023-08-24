@@ -23,6 +23,7 @@ body {
   }
   background-color: $background-color;
   color: $text-color;
+  margin: 0;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -49,4 +50,8 @@ th {
   text-align: left;
   padding: 1rem;
   border-bottom: lighten($background-color, 15%) 1px solid;
+}
+
+main {
+  padding: 0 2rem;
 }

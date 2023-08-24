@@ -3,3 +3,16 @@
 @import "./kitchen-sink";
 @import "./forms";
 @import "./typography";
+
+@import "./components/nav";
+@import "./components/header";
+
+
+.icon {
+    svg {
+        g {
+
+            fill: $highlight-color;
+        }
+    }
+}
