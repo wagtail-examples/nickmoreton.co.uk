@@ -1,4 +1,4 @@
-{% load static wagtailcore_tags wagtailuserbar %}
+{% load static wagtailcore_tags wagtailuserbar navigation_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -70,23 +70,15 @@
                 </svg>
             </div>
             <menu role="menu" id="menu">
-                <ul>
-                    <li>
-                        <a href="#1">Home<span>&nbsp;</span></a>
-                    </li>
-                    <li>
-                        <a href="#2">Projects<span>&nbsp;</span></a>
-                    </li>
-                    <li>
-                        <a href="#3">Wagtail Packages<span>&nbsp;</span></a>
-                    </li>
-                </ul>
+                {% get_navigation %}
             </menu>
         </nav>
 
+        {% block header %}
         <header>
             <h1>Web Developer: <span data-animated>using</span> Wagtail CMS</h1>
         </header>
+        {% endblock header %}
 
         <main>
         {% block content %}{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block header %}{% endblock header %}
+
+{% block content %}
+<article>
+    {% for block in page.body %}
+        {% include_block block %}
+    {% endfor %}
+</article>
+<aside>
+    {{ latest_articles }}
+</aside>
+{% endblock content %}
