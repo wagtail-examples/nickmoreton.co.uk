@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+<div>
+
+    <h1>{{ page.title }}</h1>
+    {{ page.body }}
+    <ul>
+        {% for package in packages %}
+            <li>
+                <a href="{{ package.url }}">{{ package.title }}</a>: {{ package.excerpt }}
+            </li>
+        {% endfor %}
+    </ul>    
+</div>
+{% endblock %}
