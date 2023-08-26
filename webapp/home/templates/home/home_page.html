@@ -6,10 +6,23 @@
 {% block content %}
 
 <div>
-    {% for block in page.body %}
-    {% include_block block %}
-    {% endfor %}
 
+    <div>
+        {% for block in page.body %}
+        {% include_block block %}
+        {% endfor %}
+    
+    </div>
+    
+    <div>
+        <h3>Latest Article</h3>
+        <a href="{{ latest_article.url }}">{{ latest_article }}</a>
+    </div>
+    
+    <div>
+        <h3>Latest Package</h3>
+        <a href="{{ latest_package.url }}">{{ latest_package }}</a>
+    </div>
 </div>
 
 {% endblock content %}
