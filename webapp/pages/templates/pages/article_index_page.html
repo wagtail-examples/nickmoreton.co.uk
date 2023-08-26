@@ -10,7 +10,12 @@
     <ul>
         {% for article in articles %}
             <li>
-                <a href="{{ article.url }}">{{ article.title }}</a>: {{ article.excerpt }}
+                <div>
+                    <a href="{{ article.url }}">{{ article.title }}</a>
+                </div>
+                <div>
+                    {{ article.excerpt }}
+                </div>
             </li>
         {% endfor %}
     </ul>    

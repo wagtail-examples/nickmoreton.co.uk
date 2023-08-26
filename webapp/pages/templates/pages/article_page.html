@@ -6,10 +6,18 @@
 {% block content %}
 <article>
     {% for block in page.body %}
-        {% include_block block %}
+    {% include_block block %}
     {% endfor %}
 </article>
 <aside>
-    {{ latest_articles }}
+    <h3>Other recent articles</h3>
+    {% for article in latest_articles %}
+        <div>
+            <a href="{{ article.url }}">{{ article.title }}</a>
+        </div>
+        <div>
+            {{ article.excerpt }}
+        </div>
+    {% endfor %}
 </aside>
 {% endblock content %}

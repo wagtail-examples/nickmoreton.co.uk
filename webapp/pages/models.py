@@ -47,7 +47,8 @@ class ArticlePage(BasePage):
     ]
 
     def get_latest_articles(self):
-        return ArticlePage.objects.live().order_by("-date")[:3]
+        articles = ArticlePage.objects.live().order_by("-date").exclude(id=self.id)
+        return articles[:3]
 
     def get_context(self, request):
         context = super().get_context(request)
@@ -91,7 +92,8 @@ class PackagePage(BasePage):
     ]
 
     def get_latest_packages(self):
-        return PackagePage.objects.live().order_by("-date")[:3]
+        packages = PackagePage.objects.live().order_by("-date")
+        return packages[:3]
 
     def get_context(self, request):
         context = super().get_context(request)
