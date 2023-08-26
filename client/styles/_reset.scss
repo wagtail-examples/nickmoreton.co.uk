@@ -80,6 +80,9 @@ th {
 main {
   padding: 2rem;
   max-width: $desktop-breakpoint;
+}
+
+.container {
   @media screen and (min-width: $tablet-breakpoint) {
     display: grid;
     grid-template-columns: 8fr 4fr;

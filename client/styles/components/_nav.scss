@@ -116,6 +116,12 @@ nav[data-state=mobile-active] {
     }
 }
 
+@media screen and (min-width: $desktop-breakpoint) {
+    nav {
+        justify-content: flex-start;
+    }
+}
+
 // nav {
 //     background: $nav-background-color;
 //     color: $nav-color;
