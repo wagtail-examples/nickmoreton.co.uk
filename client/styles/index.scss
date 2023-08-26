@@ -6,7 +6,9 @@
 
 @import "./components/nav";
 @import "./components/header";
+@import "./components/code_blocks";
 
+@import "../../node_modules/highlight.js/styles/a11y-dark.css";
 
 .icon {
     svg {
@@ -16,3 +18,4 @@
         }
     }
 }
+

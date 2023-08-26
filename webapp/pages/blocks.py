@@ -23,6 +23,24 @@ class HeadingBlock(BaseHeadingBlock):
         template = "blocks/heading.html"
 
 
+class CodeBlock(blocks.StructBlock):
+    code = blocks.TextBlock()
+    language = blocks.ChoiceBlock(
+        choices=[
+            ("python", "Python"),
+            ("html", "HTML"),
+            ("css", "CSS"),
+            ("javascript", "JavaScript"),
+            ("bash", "Bash"),
+        ]
+    )
+
+    class Meta:
+        icon = "code"
+        template = "blocks/code.html"
+
+
 class BaseBlocks(blocks.StreamBlock):
-    rich_text = blocks.RichTextBlock()
     heading = HeadingBlock()
+    rich_text = blocks.RichTextBlock()
+    code = CodeBlock()
