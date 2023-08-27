@@ -7,7 +7,6 @@
 html {
   font-size: 62.5%;
   box-sizing: border-box;
-  overflow-x: hidden;
 }
 
 body {
@@ -28,10 +27,6 @@ body {
   min-height: 100vh;
 }
 
-article {
-  max-width: 800px;
-}
-
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -50,15 +45,3 @@ th {
   padding: 1rem;
   border-bottom: lighten($background-color, 15%) 1px solid;
 }
-
-// .container {
-//   @media screen and (min-width: $tablet-breakpoint) {
-//     display: grid;
-//     grid-template-columns: 8fr 4fr;
-//     gap: 10rem;
-//   }
-//   @media screen and (min-width: $desktop-breakpoint) {
-//     margin-left: auto;
-//     margin-right: auto;
-//   }
-// }

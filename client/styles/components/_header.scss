@@ -20,7 +20,7 @@ header {
         }
     }
     &.short {
-        padding: 2rem 2rem;
+        padding: 2rem 0;
         h1 {
             font-size: 4rem;
             margin: 0;
@@ -33,13 +33,6 @@ header {
             [data-animated] {
                 width: 120px;
             }
-        }
-    }
-
-    @media screen and (min-width: $desktop-breakpoint) {
-        h1 {
-            padding-left: 2rem;
-            padding-right: 2rem;
         }
     }
 }

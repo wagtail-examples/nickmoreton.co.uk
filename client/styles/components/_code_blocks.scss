@@ -2,7 +2,6 @@ pre {
     margin: 0;
     code {
         border-radius: .75rem;
-        // border: 1px solid rgba($secondary-color, .6);
         box-shadow: .2rem .2rem .2rem .2rem rgba($accent-color, .6);
     }
 }
@@ -41,7 +40,15 @@ pre {
             transition: opacity .3s ease-in-out;
         }
     }
+    @media screen and (min-width: $tablet-breakpoint) {
+        width: $tablet-breakpoint - 260;
+    }
+    $large-tablet: $tablet-breakpoint + 200;
+    @media screen and (min-width: $large-tablet) {
+        width: $large-tablet - 260;
+    }
     @media screen and (min-width: $desktop-breakpoint) {
+        width: $desktop-breakpoint - 460;
         &:hover {
             .copy {
                 opacity: 1;

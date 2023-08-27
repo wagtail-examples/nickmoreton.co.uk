@@ -10,23 +10,25 @@
 {% endblock header %}
 
 {% block content %}
-<article>
-    {% for block in page.body %}
-    {% include_block block %}
-    {% endfor %}
-</article>
-<aside>
-    {% include "pages/includes/chapter_aside.html" %}
-    <section>
-        <h3>Other recent articles</h3>
-        {% for article in latest_articles %}
-            <div>
-                <a href="{{ article.url }}">{{ article.title }}</a>
-            </div>
-            <div>
-                {{ article.excerpt }}
-            </div>
+<div class="container-grid">
+    <article>
+        {% for block in page.body %}
+        {% include_block block %}
         {% endfor %}
-    </section>
-</aside>
+    </article>
+    <aside>
+        {% include "pages/includes/chapter_aside.html" %}
+        <section>
+            <h3>Other recent articles</h3>
+            {% for article in latest_articles %}
+                <div>
+                    <a href="{{ article.url }}">{{ article.title }}</a>
+                </div>
+                <div>
+                    {{ article.excerpt }}
+                </div>
+            {% endfor %}
+        </section>
+    </aside>
+</div>
 {% endblock content %}

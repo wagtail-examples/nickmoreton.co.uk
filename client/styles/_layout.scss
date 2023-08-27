@@ -1,26 +1,18 @@
-main {
+.container {
+    max-width: $desktop-breakpoint;
+    padding: 2rem;
+    margin: 0 auto;
+}
+
+.container-grid {
     padding: 2rem;
     max-width: $desktop-breakpoint;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
     @media screen and (min-width: $tablet-breakpoint) {
         display: grid;
         grid-template-columns: 3fr 1fr;
-        gap: 6rem;
+        gap: 4rem;
+        padding: 2rem;
     }
-}
-
-
-aside {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    h3 {
-        font-weight: 400;
-    }
-}
-
-
-.container {
-    max-width: $desktop-breakpoint;
-    margin: 0 auto;
 }
