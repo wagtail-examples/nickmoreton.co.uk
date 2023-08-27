@@ -4,14 +4,8 @@
     <a href="{{ article.url }}">Back to article</a>
     {% endif %}
     {% for chapter in chapters %}
-        {% if chapter.id != current_chapter.id %}
-            <div>
-                <a href="{{ chapter.url }}">{{ chapter.title }}</a>
-            </div>
-        {% else %}
-            <div>
-                {{ chapter.title }} -- you are here
-            </div>
-        {% endif %}
+        <div>
+            <a href="{{ chapter.url }}" {% if chapter.id == current_chapter.id %}class="active"{% endif %}>{{ chapter.title }}</a>
+        </div>
     {% endfor %}
 {% endif %}
