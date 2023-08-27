@@ -1,10 +1,17 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
 
-{% block header %}{% endblock header %}
+{% block header %}
+<header class="short">
+    <div class="container">
+        <h1>{{ page.get_parent.title }}</h1>
+    </div>
+</header>
+{% endblock header %}
 
 {% block content %}
 <article>
+    <h2>{{ page.title }}</h2>
     {% for block in page.body %}
     {% include_block block %}
     {% endfor %}

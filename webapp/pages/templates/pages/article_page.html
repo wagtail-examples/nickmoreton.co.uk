@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
 
-{% block header %}{% endblock header %}
+{% block header %}
+<header class="short">
+    <div class="container">
+        <h1>{{ page.title }}</h1>
+    </div>
+</header>
+{% endblock header %}
 
 {% block content %}
 <article>
@@ -11,14 +17,16 @@
 </article>
 <aside>
     {% include "pages/includes/chapter_aside.html" %}
-    <h3>Other recent articles</h3>
-    {% for article in latest_articles %}
-        <div>
-            <a href="{{ article.url }}">{{ article.title }}</a>
-        </div>
-        <div>
-            {{ article.excerpt }}
-        </div>
-    {% endfor %}
+    <section>
+        <h3>Other recent articles</h3>
+        {% for article in latest_articles %}
+            <div>
+                <a href="{{ article.url }}">{{ article.title }}</a>
+            </div>
+            <div>
+                {{ article.excerpt }}
+            </div>
+        {% endfor %}
+    </section>
 </aside>
 {% endblock content %}

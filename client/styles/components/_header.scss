@@ -2,30 +2,44 @@ header {
     overflow: hidden;
     background-image: linear-gradient(to bottom, $secondary-color, $tertiary-color);
     margin: 0;
-    padding: 2rem 2rem;
+    padding: 2rem;
     box-shadow: 10 0 3rem rgba(0, 0, 0, 0.2);
     color: $background-color;
     h1 {
-        font-size: 4rem;
+        font-size: 3rem;
         margin: 2rem 0;
         color: darken($tertiary-color, 20%);
         text-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
         [data-animated] {
             display: inline-block;
             text-align: center;
-            width: 120px;
+            width: 86px;
             &.finished {
                 color: rgba(white, .85);
             }
         }
     }
-    @media screen and (min-width: $tablet-breakpoint) {
-        padding: 8rem 4rem;
+    &.short {
+        padding: 2rem 2rem;
         h1 {
-            font-size: 5rem;
+            font-size: 4rem;
+            margin: 0;
+        }
+    }
+    @media screen and (min-width: $tablet-breakpoint) {
+        padding: 8rem 2rem;
+        h1 {
+            font-size: 4rem;
             [data-animated] {
-                width: 150px;
+                width: 120px;
             }
+        }
+    }
+
+    @media screen and (min-width: $desktop-breakpoint) {
+        h1 {
+            padding-left: 2rem;
+            padding-right: 2rem;
         }
     }
 }
