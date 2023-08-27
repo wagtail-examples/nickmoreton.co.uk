@@ -1,15 +1,24 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags pypi_tags %}
 
-{% block header %}{% endblock header %}
+{% block header %}
+<header class="short">
+    <div class="container">
+        <h1>{{ page.title }}</h1>
+    </div>
+</header>
+{% endblock header %}
 
 {% block content %}
-<article>
-    {% for block in page.body %}
-        {% include_block block %}
-    {% endfor %}
-</article>
-<aside>
-    {{ latest_packages }}
-</aside>
+<div class="container-grid">
+    <article>
+        {% for block in page.body %}
+            {% include_block block %}
+        {% endfor %}
+    </article>
+    <aside>
+        <!-- Package data -->
+        {% pypi_info page.pypi_package_name %}
+    </aside>
+</div>
 {% endblock content %}

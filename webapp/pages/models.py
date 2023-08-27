@@ -137,11 +137,13 @@ class PackagePage(BasePage):
     )
     date = models.DateField("Package published date")
     excerpt = models.CharField(max_length=255, blank=True)
+    pypi_package_name = models.CharField(max_length=255, blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel("body"),
         FieldPanel("date"),
         FieldPanel("excerpt"),
+        FieldPanel("pypi_package_name"),
     ]
 
     def get_latest_packages(self):
