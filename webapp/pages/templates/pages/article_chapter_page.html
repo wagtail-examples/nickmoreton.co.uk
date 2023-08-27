@@ -10,7 +10,7 @@
     {% endfor %}
 </article>
 <aside>
-    {% include "pages/includes/chapter_aside.html" %}
+    {% include "pages/includes/chapter_aside.html" with show_back_link="yes" %}
     <h3>Other recent articles</h3>
     {% for article in latest_articles %}
         <div>
