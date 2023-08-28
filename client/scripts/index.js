@@ -1,6 +1,7 @@
 import "../styles/index.scss";
 import Navigation from "./nav";
 import TaglineAnimator from "./animate";
+import AsidePositionSticky from "./aside";
 // import Copier from "./copy";
 import hljs from 'highlight.js';
 import Copier from "./copier";
@@ -15,3 +16,6 @@ tagline.init();
 
 const copy = new Copier();
 copy.init();
+
+const aside = new AsidePositionSticky();
+aside.init();

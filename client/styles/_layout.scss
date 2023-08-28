@@ -9,10 +9,32 @@
     max-width: $desktop-breakpoint;
     margin-left: auto;
     margin-right: auto;
+
     @media screen and (min-width: $tablet-breakpoint) {
         display: grid;
         grid-template-columns: 3fr 1fr;
         gap: 4rem;
         padding: 2rem;
     }
+
+    @media screen and (min-width: $desktop-breakpoint) {
+        gap: 16rem;
+    }
+}
+
+@media screen and (min-width: $tablet-breakpoint) {
+    // there's some javascript that adds the class 'fixed' to the aside element
+
+    aside {
+        transition: all 0s;
+    }
+
+    aside.sticky {
+        height: 0; // prevent the body height growing when the aside is fixed
+        overflow: visible;
+    }
+}
+
+aside section {
+    margin-bottom: 2rem;
 }
