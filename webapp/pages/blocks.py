@@ -1,4 +1,5 @@
 from wagtail import blocks
+from wagtail.images.blocks import ImageChooserBlock
 
 
 class BaseHeadingBlock(blocks.StructBlock):
@@ -40,8 +41,25 @@ class CodeBlock(blocks.StructBlock):
         template = "blocks/code.html"
 
 
+class ImageBlockAligned(blocks.StructBlock):
+    image = ImageChooserBlock()
+    alignment = blocks.ChoiceBlock(
+        choices=[
+            ("left", "Left"),
+            ("center", "Center"),
+            ("right", "Right"),
+        ]
+    )
+    content = blocks.RichTextBlock(required=False)
+
+    class Meta:
+        icon = "image"
+        template = "blocks/image_aligned.html"
+
+
 class BaseBlocks(blocks.StreamBlock):
     heading = HeadingBlock()
     callout = blocks.RichTextBlock(template="blocks/callout.html")
     rich_text = blocks.RichTextBlock()
     code = CodeBlock()
+    image_aligned_block = ImageBlockAligned()

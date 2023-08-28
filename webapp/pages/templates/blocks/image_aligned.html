@@ -1,0 +1,13 @@
+{% load wagtailimages_tags %}
+
+<div class="image-aligned {{ value.alignment }}">
+    <figure>
+        {% image value.image width-400 %}
+        <figcaption>{{ value.caption }}</figcaption>
+    </figure>
+    {% if value.content %}
+    <div class="content">
+        {{ value.content }}
+    </div>
+    {% endif %}
+</div>
