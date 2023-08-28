@@ -1,14 +1,26 @@
 pre {
+    // margin: -2rem 0 -5rem 0;
     margin: 0;
+    transform: translateY(-2rem);
     code {
         border-radius: .75rem;
-        box-shadow: .2rem .2rem .2rem .2rem rgba($accent-color, .6);
+        border: 1px solid rgba(white, .2);
+        box-shadow: .5rem .5rem 1rem 0 rgba(black, .3);
+        font-size: 1.2rem;
+        margin-bottom: -6rem;
+        @media  screen and (min-width: $tablet-breakpoint) {
+            font-size: 1.3rem;
+        }
+        @media  screen and (min-width: $tablet-breakpoint) {
+            font-size: 1.4rem;
+        }
     }
 }
 
 .code-block {
     position: relative;
     cursor: pointer;
+    overflow: hidden;
     .lang {
         position: absolute;
         top: $base-line-height * 2 + rem;
@@ -18,7 +30,7 @@ pre {
     .copy {
         position: absolute;
         bottom: 3rem;
-        right: -1rem;
+        right: 0;
         background-color: rgba($accent-color, .8);
         padding: .2rem 1rem;
         border-radius: .75rem;
