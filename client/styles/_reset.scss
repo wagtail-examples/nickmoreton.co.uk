@@ -45,3 +45,15 @@ th {
   padding: 1rem;
   border-bottom: lighten($background-color, 15%) 1px solid;
 }
+
+.white {
+  color: white;
+}
+
+.no-decoration {
+  text-decoration: none !important;
+}
+
+.smaller {
+  font-size: 1.5rem;
+}

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load wagtailcore_tags %}
 
 {% block header %}
 <header class="short">
@@ -10,20 +11,18 @@
 
 {% block content %}
 <div class="container">
-
-    <h1>{{ page.title }}</h1>
-    {{ page.body }}
-    <ul>
+    {% for block in page.body %}
+    {% include_block block %}
+    {% endfor %}
+    <ul class="list article-list">
         {% for article in articles %}
-            <li>
-                <div>
-                    <a href="{{ article.url }}">{{ article.title }}</a>
-                </div>
-                <div>
-                    {{ article.excerpt }}
-                </div>
+            <li>    
+                <a href="{{ article.url }}">
+                    <span class="title">{{ article.title }}</span>
+                    <span class="white no-decoration smaller">{{ article.excerpt }}</span>
+                </a>
             </li>
         {% endfor %}
-    </ul>    
+    </ul>
 </div>
 {% endblock %}
