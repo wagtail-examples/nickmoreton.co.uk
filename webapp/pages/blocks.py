@@ -42,5 +42,6 @@ class CodeBlock(blocks.StructBlock):
 
 class BaseBlocks(blocks.StreamBlock):
     heading = HeadingBlock()
+    callout = blocks.RichTextBlock(template="blocks/callout.html")
     rich_text = blocks.RichTextBlock()
     code = CodeBlock()
