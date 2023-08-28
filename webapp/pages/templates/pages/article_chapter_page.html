@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block header %}
+<header class="short">
+    <div class="container">
+        <h1>{{ page.get_parent.title }}</h1>
+    </div>
+</header>
+{% endblock header %}
+
+{% block content %}
+<div class="container-grid">
+    <article>
+        <h2>{{ page.title }}</h2>
+        {% for block in page.body %}
+        {% include_block block %}
+        {% endfor %}
+    </article>
+    <aside>
+        {% include "pages/includes/chapter_aside.html" with show_back_link="yes" %}
+        <h3>Other recent articles</h3>
+        {% for article in latest_articles %}
+            <div>
+                <a href="{{ article.url }}">{{ article.title }}</a>
+            </div>
+        {% endfor %}
+    </aside>
+</div>
+{% endblock content %}

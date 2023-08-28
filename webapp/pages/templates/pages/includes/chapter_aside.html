@@ -1,0 +1,13 @@
+{% if chapters|length %}
+<section>
+    <h3>Chapters</h3>
+    {% if show_back_link == "yes" %}
+    <a href="{{ article.url }}">Back to article</a>
+    {% endif %}
+    {% for chapter in chapters %}
+        <div>
+            <a href="{{ chapter.url }}" {% if chapter.id == current_chapter.id %}class="active"{% endif %}>{{ chapter.title }}</a>
+        </div>
+    {% endfor %}
+</section>
+{% endif %}

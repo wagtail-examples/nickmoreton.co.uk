@@ -4,11 +4,19 @@ $nav-color-hover: $text-color;
 
 nav {
     background: $nav-background-color;
+    background-image: linear-gradient(to bottom, lighten($nav-background-color, 10), $nav-background-color);
     color: $nav-color;
     display: flex;
-    justify-content: space-between;
+    // justify-content: space-between;
     align-items: center;
     height: 80px;
+
+    .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
 
     menu[role=menu] {
         position: absolute;
@@ -87,6 +95,7 @@ nav[data-state=mobile-active] {
             opacity: 1;
             top: inherit;
             left: inherit;
+            background-color: transparent;
             ul {
                 opacity: 1;
                 font-size: $base-font-size + .2;
@@ -113,6 +122,16 @@ nav[data-state=mobile-active] {
                 }
             }
         }
+    }
+}
+
+@media screen and (min-width: $desktop-breakpoint) {
+    nav {
+        justify-content: flex-start;
+    }
+    .nav-container {
+        max-width: $desktop-breakpoint;
+        margin: 0 auto;
     }
 }
 

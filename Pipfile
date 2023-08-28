@@ -8,6 +8,7 @@ wagtail = ">=5.1,<5.2"
 django = "<4.2,>=4.1"
 mysqlclient = "<2.3,>=2.2"
 python-dotenv = ">=1.0,<1.1"
+requests = ">=2.31,<2.32"
 
 [dev-packages]
 black = "==23.7.0"

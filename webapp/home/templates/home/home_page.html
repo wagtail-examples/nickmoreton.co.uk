@@ -1,8 +1,31 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static wagtailcore_tags %}
 
 {% block body_class %}template-homepage{% endblock %}
 
 {% block content %}
+
+    <div class="container-grid">
+        <section>
+            {% for block in page.body %}
+            {% include_block block %}
+            {% endfor %}
+        
+        </section>
+        
+        <aside>
+            <div>
+                <h3>Latest Article</h3>
+                <a href="{{ latest_article.url }}">{{ latest_article }}</a>
+            </div>
+            
+            <div>
+                <h3>Latest Package</h3>
+                <a href="{{ latest_package.url }}">{{ latest_package }}</a>
+            </div>
+    
+        </aside>
+    </div>
+</div>
 
 {% endblock content %}

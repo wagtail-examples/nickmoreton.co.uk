@@ -7,7 +7,6 @@
 html {
   font-size: 62.5%;
   box-sizing: border-box;
-  overflow-x: hidden;
 }
 
 body {
@@ -22,15 +21,10 @@ body {
     font-size: $base-font-size + 0.2rem;
   }
   background-color: $background-color;
+  background-image: linear-gradient(to bottom, $background-color, lighten($background-color, 5));
   color: $text-color;
   margin: 0;
-}
-
-h1,h2,h3,h4,h5,h6 {
-  color: darken($text-color, 5%);
-  margin: 0 0 1rem 0;
-  padding: 0;
-  line-height: 1;
+  min-height: 100vh;
 }
 
 table {
@@ -52,6 +46,14 @@ th {
   border-bottom: lighten($background-color, 15%) 1px solid;
 }
 
-main {
-  padding: 0 2rem;
+.white {
+  color: white;
+}
+
+.no-decoration {
+  text-decoration: none !important;
+}
+
+.smaller {
+  font-size: 1.5rem;
 }
