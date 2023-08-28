@@ -14,10 +14,13 @@
     {% for block in page.body %}
     {% include_block block %}
     {% endfor %}
-    <ul>
+    <ul class="list article-list">
         {% for package in packages %}
             <li>
-                <a href="{{ package.url }}">{{ package.title }}</a>: {{ package.excerpt }}
+                <a href="{{ package.url }}">
+                    <span class="title">{{ package.title }}</span>
+                    <span class="white no-decoration smaller">{{ package.excerpt }}</span>
+                </a>
             </li>
         {% endfor %}
     </ul>    

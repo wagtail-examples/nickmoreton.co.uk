@@ -23,6 +23,11 @@ pre {
         padding: .2rem 1rem;
         border-radius: .75rem;
         pointer-events: none;
+        display: flex;
+        align-items: center;
+        svg {
+            margin-right: 1rem;
+        }
         @media screen and (min-width: $desktop-breakpoint) {
             &:hover {
                 .copy {
@@ -33,8 +38,8 @@ pre {
             left: 50%;
             right: inherit;
             bottom: inherit;
-            transform: translate(-50%, -50%);
-            padding: 2rem;
+            transform: translate(-50%, -100%);
+            padding: 1rem 2rem;
             background-color: $accent-color;
             opacity: 0;
             transition: opacity .3s ease-in-out;
