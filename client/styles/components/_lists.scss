@@ -31,4 +31,21 @@
 
 .article-list {
     @extend .list;
+    position: relative;
+    .arrow {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(-100%, 50%);
+        opacity: 0;
+        transition: all .2s ease-in-out;
+    }
+    a, a:visited {
+        &:hover {
+            .arrow {
+                opacity: 1;
+                transform: translate(-30%, 50%);
+            }
+        }
+    }
 }
