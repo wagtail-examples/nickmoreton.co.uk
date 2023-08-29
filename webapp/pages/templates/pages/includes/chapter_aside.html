@@ -1,13 +1,27 @@
 {% if chapters|length %}
 <section>
-    <h3>Chapters</h3>
     {% if show_back_link == "yes" %}
-    <a href="{{ article.url }}">Back to article</a>
+    <a href="{{ article.url }}" class="chapter-back">
+        <span class="icon-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" height="12" width="12" viewBox="0 0 12 12">
+                <title>move left</title>
+                <g fill="#023047" class="nc-icon-wrapper">
+                    <path d="M11,0a1,1,0,0,0-1,1V11a1,1,0,0,0,2,0V1A1,1,0,0,0,11,0Z" fill="#000000"></path>
+                    <path data-color="color-2"
+                        d="M4.707,2.045a.5.5,0,0,0-.536.079l-4,3.5a.5.5,0,0,0,0,.752l4,3.5A.5.5,0,0,0,4.5,10,.5.5,0,0,0,5,9.5V7H7.5A.5.5,0,0,0,8,6.5v-1A.5.5,0,0,0,7.5,5H5V2.5A.5.5,0,0,0,4.707,2.045Z">
+                    </path>
+                </g>
+            </svg>
+        </span>
+        Back to article</a>
     {% endif %}
-    {% for chapter in chapters %}
-        <div>
-            <a href="{{ chapter.url }}" {% if chapter.id == current_chapter.id %}class="active"{% endif %}>{{ chapter.title }}</a>
-        </div>
-    {% endfor %}
+    <h3>Chapters</h3>
+    <ul class="chapter-list">
+        {% for chapter in chapters %}
+            <li>
+                <a href="{{ chapter.url }}" {% if chapter.id == current_chapter.id %}class="active"{% endif %}>{{ chapter.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
 </section>
 {% endif %}

@@ -1,0 +1,16 @@
+.button {
+    font-size: 1.5rem;
+    display: inline-block;
+    background-color: $secondary-color;
+    background-image: linear-gradient(to bottom, $secondary-color, $tertiary-color);
+    color: $primary-color;
+    padding: 0.5rem 1rem;
+    border-radius: 3px;
+    margin-bottom: 2rem;
+
+    &:hover, &:visited {
+        background-image: linear-gradient(to bottom, $tertiary-color, $secondary-color);
+        color: $primary-color !important;
+        text-decoration: none;
+    }
+}

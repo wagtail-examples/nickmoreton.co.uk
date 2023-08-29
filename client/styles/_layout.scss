@@ -12,13 +12,9 @@
 
     @media screen and (min-width: $tablet-breakpoint) {
         display: grid;
-        grid-template-columns: 3fr 1fr;
+        grid-template-columns: 8fr 4fr;
         gap: 4rem;
         padding: 2rem;
-    }
-
-    @media screen and (min-width: $desktop-breakpoint) {
-        gap: 16rem;
     }
 }
 
@@ -37,4 +33,16 @@
 
 aside section {
     margin-bottom: 2rem;
+}
+
+.pagination {
+    padding-top: 0;
+    margin-top: 0;
+    display: flex;
+    justify-content: space-between;
+    .icon {
+        // g {
+        //     fill: $highlight-color;
+        // }
+    }
 }
