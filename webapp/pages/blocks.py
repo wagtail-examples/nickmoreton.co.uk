@@ -28,11 +28,13 @@ class CodeBlock(blocks.StructBlock):
     code = blocks.TextBlock()
     language = blocks.ChoiceBlock(
         choices=[
-            ("python", "Python"),
-            ("html", "HTML"),
-            ("css", "CSS"),
-            ("javascript", "JavaScript"),
             ("bash", "Bash"),
+            ("css", "CSS"),
+            ("html", "HTML"),
+            ("javascript", "JavaScript"),
+            ("json", "JSON"),
+            ("python", "Python"),
+            ("yaml", "YAML"),
         ]
     )
 
