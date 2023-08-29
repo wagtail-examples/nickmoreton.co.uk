@@ -7,6 +7,7 @@ header {
     color: $background-color;
     h1 {
         font-size: 3rem;
+        font-weight: 600;
         margin: 2rem 0;
         color: darken($tertiary-color, 20%);
         text-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);

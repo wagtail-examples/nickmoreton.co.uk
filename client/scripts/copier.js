@@ -11,7 +11,7 @@ class Copier {
         }
     }
     copy(btn) {
-        text = btn.nextElementSibling.value;
+        text = btn.parentElement.nextElementSibling.value;
         navigator.clipboard.writeText(text);
         copyMessageContainer = btn.parentElement.parentElement.querySelector('.copy');
         originalMessage = copyMessageContainer.innerHTML;

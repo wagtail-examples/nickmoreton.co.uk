@@ -10,7 +10,7 @@
     margin-left: auto;
     margin-right: auto;
 
-    @media screen and (min-width: $tablet-breakpoint) {
+    @media screen and (min-width: $desktop-breakpoint) {
         display: grid;
         grid-template-columns: 8fr 4fr;
         gap: 4rem;
@@ -18,7 +18,7 @@
     }
 }
 
-@media screen and (min-width: $tablet-breakpoint) {
+@media screen and (min-width: $desktop-breakpoint) {
     // there's some javascript that adds the class 'fixed' to the aside element
 
     aside {
@@ -40,9 +40,4 @@ aside section {
     margin-top: 0;
     display: flex;
     justify-content: space-between;
-    .icon {
-        // g {
-        //     fill: $highlight-color;
-        // }
-    }
 }
