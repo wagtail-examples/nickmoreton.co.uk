@@ -19,7 +19,21 @@
     <ul class="chapter-list">
         {% for chapter in chapters %}
             <li>
-                <a href="{{ chapter.url }}" {% if chapter.id == current_chapter.id %}class="active"{% endif %}>{{ chapter.title }}</a>
+                <a href="{{ chapter.url }}" {% if chapter.id == current_chapter.id %}class="active"{% endif %}>
+                    {% if chapter.id == current_chapter.id %}
+                    <span class="icon-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="12" width="12" viewBox="0 0 12 12">
+                            <title>move right</title>
+                            <g fill="#ffffff" class="nc-icon-wrapper">
+                                <path d="M1,12a1,1,0,0,0,1-1V1A1,1,0,0,0,0,1V11A1,1,0,0,0,1,12Z" fill="#ffffff"></path>
+                                <path d="M7.829,2.124A.5.5,0,0,0,7,2.5V5H4.5a.5.5,0,0,0-.5.5v1a.5.5,0,0,0,.5.5H7V9.5a.5.5,0,0,0,.829.376l4-3.5a.5.5,0,0,0,0-.752Z">
+                                </path>
+                            </g>
+                        </svg>
+                    </span>
+                    {% endif %}
+                    {{ chapter.title }}
+                </a>
             </li>
         {% endfor %}
     </ul>

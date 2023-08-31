@@ -19,7 +19,7 @@ class AsidePositionSticky {
             this.offsetTop = document.scrollingElement.scrollTop;
             this.asideTop = this.offsetTop - this.totalHeight;
             this.screenWidth = window.innerWidth;
-            if (this.screenWidth >= 800) {
+            if (this.screenWidth >= 1280) {
 
                 if (this.totalHeight < window.scrollY) {
                     this.aside.style.transform = `translateY(${this.asideTop}px)`;
