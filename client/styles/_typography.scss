@@ -44,10 +44,6 @@ a:visited {
     color: $base-font-color;
     text-decoration: none;
     pointer-events: none;
-
-    &::after {
-      content: ' (current)';
-    }
   }
 }
 
@@ -74,7 +70,7 @@ h6 {
   color: darken($text-color, 5%);
   margin: 3rem 0 1rem 0;
   padding: 0;
-  line-height: 1;
+  line-height: inherit;
   font-weight: 400;
 }
 
