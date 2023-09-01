@@ -6,19 +6,27 @@ from django import template
 register = template.Library()
 
 
-@register.inclusion_tag("pages/tags/pypi_info.html", takes_context=True)
-def pypi_info(context, package_name):
+@register.inclusion_tag("pages/tags/pypi_info.html")
+def pypi_info(package_name):
     package_api_url = f"https://pypi.org/pypi/{package_name}/json"
     response = requests.get(package_api_url)
+
+    if response.status_code != 200:
+        return {
+            "release": None,
+        }
+
     package_info = response.json()
-    release = package_info["info"]["version"]
-    pypi_url = package_info["info"]["project_url"]
-    release_date = datetime.strptime(
-        package_info["releases"][release][0]["upload_time"], "%Y-%m-%dT%H:%M:%S"
+    date = datetime.strptime(
+        package_info["releases"][package_info["info"]["version"]][0]["upload_time"],
+        "%Y-%m-%dT%H:%M:%S",
     )
 
-    return {
-        "release": release,
-        "pypi_url": pypi_url,
-        "release_date": release_date,
+    ctx = {
+        "release": package_info["info"]["version"],
+        "pypi_url": package_info["info"]["project_url"],
+        "home_page": package_info["info"]["home_page"],
+        "release_date": datetime.strftime(date, "%d %b %Y"),
     }
+
+    return ctx

@@ -71,3 +71,11 @@ body.template-homepage {
     pointer-events: none;
   }
 }
+
+.flex-col {
+  display: flex;
+  align-items: center;
+  svg {
+    margin-left: .5rem;
+  }
+}
