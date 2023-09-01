@@ -24,8 +24,16 @@ class HomePage(Page):
     def latest_package(self):
         return PackagePage.objects.live().order_by("-date").first()
 
+    def all_articles(self):
+        return ArticlePage.objects.live().order_by("-date")
+
+    def all_packages(self):
+        return PackagePage.objects.live().order_by("-date")
+
     def get_context(self, request):
         context = super().get_context(request)
         context["latest_article"] = self.latest_article()
         context["latest_package"] = self.latest_package()
+        context["all_articles"] = self.all_articles()
+        context["all_packages"] = self.all_packages()
         return context
