@@ -58,3 +58,16 @@ th {
 .smaller {
   font-size: 1.5rem;
 }
+
+body.template-homepage {
+  .code-block {
+    .lang {
+      display: none;
+    }
+    .copy {
+      display: none;
+    }
+    cursor: inherit;
+    pointer-events: none;
+  }
+}
