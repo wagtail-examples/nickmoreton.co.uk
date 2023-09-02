@@ -31,7 +31,7 @@
 
 .article-list {
     @extend .list;
-    position: relative;
+    // position: relative;
     .arrow {
         position: absolute;
         top: 0;
@@ -41,6 +41,7 @@
         transition: all .2s ease-in-out;
     }
     a, a:visited {
+        position: relative;
         &:hover {
             .arrow {
                 opacity: 1;
