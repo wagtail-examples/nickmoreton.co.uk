@@ -53,12 +53,16 @@
     </article>
     <aside>
         {% include "pages/includes/chapter_aside.html" with show_back_link="yes" %}
-        <h3>Other recent articles</h3>
-        {% for article in latest_articles %}
-        <div>
-            <a href="{{ article.url }}">{{ article.title }}</a>
-        </div>
-        {% endfor %}
+        <section>
+            <h3>Other recent articles</h3>
+            <ul class="articles">
+                {% for article in latest_articles %}
+                <li>
+                    <a href="{{ article.url }}">{{ article.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
     </aside>
 </div>
 {% endblock content %}
