@@ -1,60 +1,67 @@
-# Wagtail CMS site deployed to PythonAnywhere
+# My Wagtail CMS
 
-This is a tutorial about one way to build and deploy a Wagtail CMS site to [PythonAnywhere](https://www.pythonanywhere.com).
+This is the source code for my website, [nickmoreton.co.uk](https://nickmoreton.co.uk). It stated out as an example of how to deploy a Wagtail CMS site to PythonAnywhere but I'm going to use it as a test bed for new features and ideas.
 
-I'm going to build a site for myself, [nickmoreton.co.uk](https://nickmoreton.co.uk). I'm not sure yet what I'm going to put on it, but I'll figure that out as I go along. It's a starting point that has all the elements one might need to build a Wagtail site and deploy it live.
+The article for deploying to PythonAnywhere can be found [here](https://www.nickmoreton.co.uk/articles/deploy-wagtail-cms-to-pythonanywhere/) and the source code can be found [here](https://github.com/wagtail-examples/tutorial-deploy-pythonanywhere-paid)
 
-The official [Wagtail documentation](https://wagtail.org) is excellent and I recommend you read the [Developer Documentation](https://docs.wagtail.org/en/stable/), specifically [Your first wagtail site](https://docs.wagtail.org/en/stable/getting_started/tutorial.html) but I wanted to document the process I go through.
+## Developer setup (backend)
 
-I've actually built and deployed a fair few Wagtail sites over the last decade, as a freelancer and I now work for [Torchbox](https://torchbox.com) as a developer.
+### Create a virtual environment
 
-The tech stack so far is:
+```bash
+pipenv install
+```
 
-- ✅ Python:3.10
-- ✅ Mysql:5.7 (this is a limitation of PythonAnywhere)
-- ✅ Node / webpack to build the frontend
-- ✅ CI actions for code checks
-- ✅ Pre-commit to run git hooks
-- ✅ Git push deployments to PythonAnywhere (like Heroku etc.)
-- ✅ Wagtail CMS v5.1.1
-- ✅ Django 4.1 (Mysql 5.7 requires Django < 4.2)
+### Activate the virtual environment
 
-The finished source code for the live site is here [https://github.com/nickmoreton/nickmoreton.co.uk](https://github.com/nickmoreton/nickmoreton.co.uk) on the `main` branch and will become more complete over time. It's a work in progress and at the moment is just a home page.
+```bash
+pipenv shell
+```
 
-Because I'm using git push to deploy the webapp and that requires SSH access, I need to use the paid version of PythonAnywhere, which starts at €5/month. You could use a free account but you'll need to do your deployments manually and use `git pull` to update the code.
+### Build and run the docker container (Mysql)
 
-## Contents
+```bash
+docker-compose up --build
+```
 
-- [Create a git repo to store the source code](./docs/a-1-create-a-origin-repo.md)
-- [Set up a webapp on PythonAnywhere](./docs/a-2-create-a-webapp.md)
-- [Python dependencies](./docs/b-python-dependencies.md)
-- [Start a Wagtail site](./docs/c-wagtail-start.md)
-- [Setup environment variables](./docs/d-add-envvars.md)
-- [Add a local mysql docker container for development](./docs/e-add-mysql-docker.md)
-- [Configure Wagtail to use the Mysql database](./docs/f-switch-to-mysql.md)
-- Up and running locally...
-- [Create a Mysql database on PythonAnywhere](./docs/g-create-mysql-on-pythonanywhere.md)
-- [Update some web app settings on PythonAnywhere](./docs/h-update-some-webapp-settings.md)
-- [Alter Wagtail settings to use more environment variables](./docs/i-alter-settings-extra-vars.md)
-- [Add further steps to the post-recieve hook](./docs/j-add-further-deploy-hooks.md)
-- [Update the WSGI file on PythonAnywhere](./docs/k-update-the-wsgi-file.md)
-- [Start a deployemnt](./docs/l-push-to-the-bare-repo.md)
-- Up and running on PythonAnywhere...
-- [Add code quality checks](./docs/m-add-code-quality-checks.md)
-- [Add frontend/webpack to the project](./docs/n-frontend-compiling.md)
-- [Use pre-commit to ensure static assets are production ready](./docs/o-static-compiled-pre-commit.md)
-- Try out a push to the bare repo...
-- [Add CI checks for migrations and requirements](./docs/p-ci-checks-requirements-migrations.md)
+### Run the initial setup commands
 
-Up Next - [Create a git repo to store the source code](./docs/a-1-create-a-origin-repo.md)
+```bash
+python manage.py migrate
+python manage.py createsuperuser
+```
 
-## Whats missing?
+### Run the development server
 
-There's more that could be done, here's a few extra guides.
+```bash
+python manage.py runserver
+```
 
-- [A staging/client review site](./docs/more/a-stagingclient-review-site.md)
-- [A backup strategy](./docs/more/b-a-backup-strategy.md)
-- [A guide to using git pull deployments](./docs/more/c-a-guide-to-using-git-pull-deployments.md)
-- [How to setup sending emails](./docs/more/d-how-to-setup-sending-emails.md)
-- [Database backup and restore](./docs/more/e-database-backup-and-restore.md)
-- [Media files backup and restore](./docs/more/f-media-files-backup-and-restore.md)
+## Developer setup (frontend)
+
+### Install the dependencies
+
+```bash
+nvm use
+npm install
+```
+
+### Build & watch the frontend
+
+```bash
+npm start
+```
+
+### Build the frontend
+
+```bash
+npm run build
+```
+
+## Deploy to PythonAnywhere
+
+See the article [here](https://staging.nickmoreton.co.uk/articles/deploy-wagtail-cms-to-pythonanywhere/starting-a-deployment/)
+
+## Development utils
+
+See the article [here](https://github.com/wagtail-examples/tutorial-deploy-pythonanywhere-paid/blob/main/docs/more/e-database-backup-and-restore.md) for DB and [here](https://github.com/wagtail-examples/tutorial-deploy-pythonanywhere-paid/blob/main/docs/more/f-media-files-backup-and-restore.md) for Media files

@@ -1,59 +1,28 @@
 @import "./vars";
+@import "./reset";
+@import "./kitchen-sink";
+@import "./forms";
+@import "./typography";
 
-body {
-  background-color: $background-color;
+@import "./components/nav";
+@import "./components/header";
+@import "./components/code_blocks";
+@import "./components/callout";
+@import "./components/lists";
+@import "./components/image-aligned";
+@import "./components/home_panels";
+@import "./components/footer";
+
+@import "layout";
+
+@import "../../node_modules/highlight.js/styles/night-owl.css";
+
+.icon {
+    svg {
+        g {
+
+            fill: $highlight-color;
+        }
+    }
 }
 
-h2,
-a {
-  color: $foreground-color !important;
-}
-
-svg .egg {
-  fill: $foreground-color;
-}
-
-.logo--fade-in {
-  animation: fade-in 1s ease-out;
-  animation-fill-mode: forwards;
-
-  svg g {
-    fill: white;
-  }
-}
-
-@keyframes fade-in {
-  0% {
-    opacity: 0.2;
-    transform: scale(1);
-  }
-
-  75% {
-    opacity: 0.8;
-    transform: scale(1.8) translateX(10%);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale(1.4) translateX(0) translateY(20px) rotate(0deg);
-  }
-}
-
-.header--slope {
-  animation: slope 1s ease-in-out;
-  animation-fill-mode: forwards;
-}
-
-@keyframes slope {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  90% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(-2deg);
-  }
-}

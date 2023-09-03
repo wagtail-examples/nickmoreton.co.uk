@@ -1,0 +1,101 @@
+.image-aligned {
+    border-top: 1px solid rgba($highlight-color, .2);
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+    position: relative;
+    figure {
+        margin: 1rem 0;
+        padding: 0;
+        width: 100%;
+        transition: all .2s ease-in-out;
+        cursor: pointer;
+        img {
+            width: 100%;
+            height: auto;
+            max-width: 600px;
+            border-radius: 3px;
+        }
+    }
+    .border {
+        border-top: 1px solid rgba($highlight-color, .2);
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        transform: translateY(-2rem);
+    }
+    
+    @media screen and (min-width: $desktop-breakpoint) {
+        .content {
+            font-size: 90%;
+        }
+        &.left,
+        &.right {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 4rem;
+            margin: 0;
+            figure {
+                width: 100%;
+            }
+            .content {
+                width: 100%;
+            }
+        }
+        
+        &.left {
+            flex-direction: row;
+            figure:hover {
+                transition: all .2s ease-in-out;
+                transform: scale(2);    
+                transform-origin: left center;
+                z-index: 1000;
+                img {
+                    box-shadow: 1rem 1rem 3rem 0 rgba(black, .5);
+                    border-radius: 6px;
+                }
+            }
+        }
+        
+        &.right {
+            flex-direction: row-reverse;
+            figure:hover {
+                transition: all .2s ease-in-out;
+                transform: scale(2);    
+                transform-origin: right center;
+                z-index: 1000;
+                img {
+                    box-shadow: 1rem 1rem 3rem 0 rgba(black, .5);
+                    border-radius: 6px;
+                }
+            }
+        }
+    }
+
+    &.center {
+        padding: 2rem 4rem;
+        border: none;
+        background-color: rgba($highlight-color, .1);
+        background-image: linear-gradient(rgba($highlight-color, .1), rgba($highlight-color, .3));
+        border-radius: 3px;
+        margin-bottom: 2rem;
+        .border {
+            display: none;
+        }
+        figure, .content {
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        figure:hover {
+            transition: all .2s ease-in-out;
+            transform: scale(1.3);    
+            transform-origin: center top;
+            z-index: 1000;
+            img {
+                box-shadow: 1rem 1rem 3rem 0 rgba(black, .5);
+                border-radius: 6px;
+            }
+        }
+
+    }
+}

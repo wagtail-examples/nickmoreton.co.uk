@@ -1,21 +1,41 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static wagtailcore_tags %}
 
 {% block body_class %}template-homepage{% endblock %}
 
-{% block extra_css %}
-
-{% comment %}
-Delete the line below if you're just getting started and want to remove the welcome screen!
-{% endcomment %}
-<link rel="stylesheet" href="{% static 'css/welcome_page.css' %}">
-{% endblock extra_css %}
-
 {% block content %}
 
-{% comment %}
-Delete the line below if you're just getting started and want to remove the welcome screen!
-{% endcomment %}
-{% include 'home/welcome_page.html' %}
+    <div class="container">
+        {% for block in page.body %}
+        {% include_block block %}
+        {% endfor %}
+        <div id="articles">
+            <h2>Articles</h2>
+            <ul class="home-panels">
+                {% for article in all_articles %}
+                <li>
+                    <a href="{{ article.url }}">
+                        <span class="title">{{ article.title }}</span>
+                        <span class="excerpt">{{ article.excerpt }}</span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div id="packages">
+            <h2>Packages</h2>
+            <ul class="home-panels themed">
+                {% for package in all_packages %}
+                <li>
+                    <a href="{{ package.url }}">
+                        <span class="title">{{ package.title }}</span>
+                        <span class="excerpt">{{ package.excerpt }}</span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
 
 {% endblock content %}

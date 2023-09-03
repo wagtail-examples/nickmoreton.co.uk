@@ -1,0 +1,81 @@
+// resets
+
+*,*::before,*::after {
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  --webkit-font-smoothing: antialiased;
+  font-family: $base-font-family;
+  font-size: $base-font-size - 0.2rem;
+  line-height: $base-line-height;
+  @media screen and (min-width: $tablet-breakpoint) {
+    font-size: $base-font-size;
+  }
+  @media screen and (min-width: $desktop-breakpoint) {
+    font-size: $base-font-size + 0.2rem;
+  }
+  background-color: $background-color;
+  background-image: linear-gradient(to bottom, $background-color, lighten($background-color, 5));
+  color: $text-color;
+  margin: 0;
+  min-height: 100vh;
+  padding-bottom: 6rem;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0 0 2rem 0;
+}
+
+td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: lighten($background-color, 15%) 1px solid;
+}
+
+th {
+  font-weight: $font-bold;
+  text-align: left;
+  padding: 1rem;
+  border-bottom: lighten($background-color, 15%) 1px solid;
+}
+
+.white {
+  color: white;
+}
+
+.no-decoration {
+  text-decoration: none !important;
+}
+
+.smaller {
+  font-size: 1.5rem;
+}
+
+body.template-homepage {
+  .code-block {
+    .lang {
+      display: none;
+    }
+    .copy {
+      display: none;
+    }
+    cursor: inherit;
+    pointer-events: none;
+  }
+}
+
+.flex-col {
+  display: flex;
+  align-items: center;
+  svg {
+    margin-left: .5rem;
+  }
+}

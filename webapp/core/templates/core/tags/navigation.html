@@ -1,0 +1,7 @@
+<ul>
+    {% for item in main_menu %}
+    <li>
+        <a href="{{ item.value.page.url }}">{{ item.value.label }}<span>&nbsp;</span></a>
+    </li>
+    {% endfor %}
+</ul>
