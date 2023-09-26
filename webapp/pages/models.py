@@ -45,7 +45,7 @@ class ArticlePageBase(BasePage):
 
     def get_latest_articles(self):
         articles = ArticlePage.objects.live().order_by("-date").exclude(id=self.id)
-        return articles[:3]
+        return articles
 
     def get_context(self, request):
         context = super().get_context(request)
