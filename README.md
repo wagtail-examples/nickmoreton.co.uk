@@ -6,35 +6,54 @@ The article for deploying to PythonAnywhere can be found [here](https://www.nick
 
 ## Developer setup (backend)
 
-### Create a virtual environment
+### Copy the .env.example file to .env
 
 ```bash
-pipenv install
+cp .env.example .env
 ```
 
-### Activate the virtual environment
+Then update the values for the environment variables in the .env file.
 
-```bash
-pipenv shell
+### Running the development environment
+
+The development environment uses docker-compose to run the mysql database. The makefile has commands to build the docker image, run the database, run the migrations and run the server.
+
+```
+make build
+make up
+make migrate
+make run
 ```
 
-### Build and run the docker container (Mysql)
+### Destroy the development environment
 
 ```bash
-docker-compose up --build
+make destroy
 ```
 
-### Run the initial setup commands
+### Running commands in the development environment
 
 ```bash
-python manage.py migrate
-python manage.py createsuperuser
+make sh
 ```
 
-### Run the development server
+### Miscellaneous commands
 
 ```bash
-python manage.py runserver
+make superuser # Create a superuser
+make restoredb # Restore the database from a backup in db_data
+```
+
+View the site at <http://localhost:8000>
+
+## Pull media and database from production
+
+```bash
+fab pull-db
+```
+
+```bash
+fab pull-media
 ```
 
 ## Developer setup (frontend)
