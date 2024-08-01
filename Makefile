@@ -34,4 +34,4 @@ destroy:
 	docker-compose down -v
 
 restoredb:
-	docker-compose exec db bash -c 'mysql -u webapp -pwebapp -h localhost webapp < db_data/visitdroitwichspa-db-backup.sql'
+	docker-compose exec db bash -c 'mysql -u webapp -pwebapp -h localhost webapp < dbbackups/nickmoreton-db-backup.sql'
