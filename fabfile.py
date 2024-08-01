@@ -1,3 +1,4 @@
+from itertools import count
 import os
 import subprocess
 
@@ -69,6 +70,81 @@ def pull_db(c):
     with connection as c:
         download_remote_db_backup(c)
         import_db(c)
+
+
+def download_s3_backup(c, path):
+    # create the destination directory
+    local(f'mkdir -p {BASE_DIR}/{os.getenv("BACKUP_DESTINATION")}')
+    # remove any existing files in the destination directory
+    local(f"rm -f {BASE_DIR}/{os.getenv('BACKUP_DESTINATION')}/*")
+    subprocess.run(
+        [
+            "s3cmd",
+            "get",
+            path,
+            f'{BASE_DIR}/{os.environ["BACKUP_DESTINATION"]}/{os.environ["BACKUP_FILE_NAME"]}',
+        ]
+    )
+
+
+@task
+def pull_db_s3(c):
+    """Pull database from S3 to development machine"""
+    s3_list = list_db_s3()
+
+    for i, backup in zip(count(1), s3_list):
+        print(f"{i}. {backup}")
+    path = input("Enter the index to the S3 backup: ")
+    with connection as c:
+        download_s3_backup(c, s3_list[int(path) - 1])
+
+
+def list_db_s3():
+    """List database backups in S3"""
+    with subprocess.Popen(
+        ["s3cmd", "ls", "s3://aybdbbackups/nickmoreton/"], stdout=subprocess.PIPE
+    ) as proc:
+        lines = proc.stdout.readlines()
+        lines_list = []
+    for line in lines:
+        line = line.decode().strip()
+        if line.startswith("DIR"):
+            lines_list.append(f"{line.split("DIR")[1].strip()}dbbackups/nickmoreton-db-backup.sql")
+    return lines_list
+
+
+@task
+def pull_media_s3(c):
+    """Pull media from S3 to development machine"""
+    s3_list = list_media_s3()
+
+    for i, backup in zip(count(1), s3_list):
+        print(f"{i}. {backup}")
+    path = input("Enter the index to the S3 media: ")
+
+    subprocess.run(
+        [
+            "s3cmd",
+            "get",
+            "--recursive",
+            s3_list[int(path) - 1],
+            f'{BASE_DIR}/{os.environ["MEDIA_DESTINATION"]}',
+        ]
+    )
+
+
+def list_media_s3():
+    """List media backups in S3"""
+    with subprocess.Popen(
+        ["s3cmd", "ls", "s3://aybmediabackups/nickmoreton/"], stdout=subprocess.PIPE
+    ) as proc:
+        lines = proc.stdout.readlines()
+        lines_list = []
+    for line in lines:
+        line = line.decode().strip()
+        if line.startswith("DIR"):
+            lines_list.append(f"{line.split("DIR")[1].strip()}media")
+    return lines_list
 
 
 @task
