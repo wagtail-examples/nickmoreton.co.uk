@@ -1,4 +1,15 @@
 services:
+  web:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+    command: tail -f /dev/null
   db:
     image: mysql:8.0.29
     # this is required becuse of 
