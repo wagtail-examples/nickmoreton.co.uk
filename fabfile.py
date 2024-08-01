@@ -102,14 +102,14 @@ def pull_db_s3(c):
 def list_db_s3():
     """List database backups in S3"""
     with subprocess.Popen(
-        ["s3cmd", "ls", "s3://aybdbbackups/nickmoreton/"], stdout=subprocess.PIPE
+        ["s3cmd", "ls", os.environ["S3_DB_BUCKET_NAME"]], stdout=subprocess.PIPE
     ) as proc:
         lines = proc.stdout.readlines()
         lines_list = []
     for line in lines:
         line = line.decode().strip()
         if line.startswith("DIR"):
-            lines_list.append(f"{line.split("DIR")[1].strip()}dbbackups/nickmoreton-db-backup.sql")
+            lines_list.append(f"{line.split("DIR")[1].strip()}dbbackups/{os.environ['BACKUP_FILE_NAME']}")
     return lines_list
 
 
@@ -136,7 +136,7 @@ def pull_media_s3(c):
 def list_media_s3():
     """List media backups in S3"""
     with subprocess.Popen(
-        ["s3cmd", "ls", "s3://aybmediabackups/nickmoreton/"], stdout=subprocess.PIPE
+        ["s3cmd", "ls", os.environ["S3_MEDIA_BUCKET_NAME"]], stdout=subprocess.PIPE
     ) as proc:
         lines = proc.stdout.readlines()
         lines_list = []
