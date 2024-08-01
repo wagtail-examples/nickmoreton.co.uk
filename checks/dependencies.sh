@@ -4,7 +4,7 @@
 requirements=$(cat requirements.txt)
 
 # Get the output from pipenv requirements
-pipenv_requirements=$(pipenv requirements)
+installed_requirements=$(docker-compose exec web bash -c "pip freeze")
 
 # Compare the two outputs
 if [ "$requirements" == "$pipenv_requirements" ]; then
