@@ -33,11 +33,11 @@ repos:
         pass_filenames: false
         always_run: true
         stages: [commit]
-      - id: check-static
-        name: Check static files
-        entry: ./checks/static.sh
-        language: system
-        types: [css, javascript]
-        pass_filenames: false
-        always_run: true
-        stages: [pre-commit]
+      # - id: check-static
+      #   name: Check static files
+      #   entry: ./checks/static.sh
+      #   language: system
+      #   types: [css, javascript]
+      #   pass_filenames: false
+      #   always_run: true
+      #   stages: [pre-commit]

@@ -1,6 +1,6 @@
-from itertools import count
 import os
 import subprocess
+from itertools import count
 
 from fabric import Connection
 from invoke import run as local
@@ -109,7 +109,9 @@ def list_db_s3():
     for line in lines:
         line = line.decode().strip()
         if line.startswith("DIR"):
-            lines_list.append(f"{line.split("DIR")[1].strip()}dbbackups/{os.environ['BACKUP_FILE_NAME']}")
+            lines_list.append(
+                f'{line.split("DIR")[1].strip()}dbbackups/{os.environ["BACKUP_FILE_NAME"]}'
+            )
     return lines_list
 
 
@@ -143,7 +145,7 @@ def list_media_s3():
     for line in lines:
         line = line.decode().strip()
         if line.startswith("DIR"):
-            lines_list.append(f"{line.split("DIR")[1].strip()}media")
+            lines_list.append(f'{line.split("DIR")[1].strip()}media')
     return lines_list
 
 
