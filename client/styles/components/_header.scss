@@ -1,38 +1,11 @@
 header {
-    overflow: hidden;
-    background-image: linear-gradient(to bottom, $secondary-color, $tertiary-color);
-    margin: 0;
-    padding: 2rem;
-    box-shadow: 10 0 3rem rgba(0, 0, 0, 0.2);
-    color: $background-color;
+ 
     h1 {
-        font-size: 3rem;
-        font-weight: 600;
-        margin: 2rem 0;
-        color: darken($tertiary-color, 20%);
-        text-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
-        [data-animated] {
-            display: inline-block;
-            text-align: center;
-            width: 86px;
-            &.finished {
-                color: rgba(white, .85);
-            }
-        }
+        font-size: 1.6rem;
+        margin: 0;
+        color: $secondary-color;
     }
-    &.short {
-        padding: 2rem 0;
-        h1 {
-            font-size: 4rem;
-            margin: 0;
-        }
-    }
-    @media screen and (min-width: $tablet-breakpoint) {
-        h1 {
-            font-size: 4rem;
-            [data-animated] {
-                width: 120px;
-            }
-        }
+    .finished {
+        color: $primary-color;
     }
 }

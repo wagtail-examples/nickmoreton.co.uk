@@ -10,7 +10,8 @@
 {% endblock header %}
 
 {% block content %}
-<div class="container-grid">
+<!-- <div class="container-grid"> -->
+    <div class="grid-layout">
     <article>
         {% for block in page.body %}
             {% include_block block %}
@@ -20,5 +21,6 @@
         <!-- Package data -->
         {% pypi_info page.pypi_package_name %}
     </aside>
-</div>
+    </div>
+<!-- </div> -->
 {% endblock content %}

@@ -1,24 +1,20 @@
 .callout {
-    background-color: lighten($highlight-color, 20%);
-    background-image: linear-gradient(to bottom, lighten($highlight-color, 20%), lighten($highlight-color, 10%));
-    color: $primary-color;
-    padding: .2rem 2rem;
-    border-radius: 0 3px 3px 0;
-    box-shadow: 0 0 1rem .1rem darken($primary-color, 50%);
-    margin: 2rem 0 4rem -2rem;
-    font-size: 110%;
-    line-height: 160%;
+    padding: 2rem;
+    background-color: $highlight-color;
+    border: 10px solid darken($highlight-color, 10%);
+    border-radius: .5rem;
+    margin: 2rem 0;
+    transform: rotate(-.5deg) translateX(-5%);
+    * {
+        color: darken($highlight-color, 30%);
+    }
+
     @media  screen and (min-width: $tablet-breakpoint) {
         max-width: 70%;
     }
-    @media  screen and (min-width: $desktop-breakpoint) {
-        margin-left: 0;
-        border-radius: 3px;
-        max-width: 60%;
-    }
+
     a {
         text-decoration: underline;
-        color: $primary-color;
     }
 }
 

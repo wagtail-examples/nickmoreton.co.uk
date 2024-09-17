@@ -1,28 +1,61 @@
+@use "../../node_modules/@picocss/pico/scss/pico.scss" as *;
+@use "../../node_modules/@picocss/pico/scss/colors/index" as *;
+
 @import "./vars";
-@import "./reset";
-@import "./kitchen-sink";
-@import "./forms";
-@import "./typography";
 
 @import "./components/nav";
 @import "./components/header";
 @import "./components/code_blocks";
 @import "./components/callout";
-@import "./components/lists";
 @import "./components/image-aligned";
-@import "./components/home_panels";
+@import "./components/panels";
 @import "./components/footer";
+@import "./components/aside";
 
 @import "layout";
 
-@import "../../node_modules/highlight.js/styles/night-owl.css";
+@import "../../node_modules/highlight.js/scss/night-owl.scss";
 
-.icon {
-    svg {
-        g {
+body {
+    // font-family: $base-font-family;
+}
 
-            fill: $highlight-color;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: $special-font-family;
+}
+
+h2 {
+    font-size: 1.4rem;
+}
+
+.button {
+    display: inline-flex;
+    justify-content: space-between;
+    // margin-bottom: 1rem;
+    background-color: $primary-color;
+    padding: .25rem 1rem;
+    color: white;
+    border-radius: 5px;
+    // position: absolute;
+    // top: 0;
+    // right: 0;
+    font-size: 0.9rem;
+    .icon-arrow {
+        transform: translateY(-0.1em);
+    }
+    &.next {
+        .icon-arrow {
+            margin-left: .5rem;
+        }
+    }
+    &.prev {
+        .icon-arrow {
+            margin-right: .5rem;
         }
     }
 }
-
