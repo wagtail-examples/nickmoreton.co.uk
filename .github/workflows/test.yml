@@ -1,4 +1,4 @@
-name: compiled-styles-scripts
+name: checks
 
 on:
   push:
