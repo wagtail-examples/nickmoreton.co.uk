@@ -1,6 +1,6 @@
 #!/bin/bash
 
-result=$(docker-compose run web python manage.py makemigrations --check --dry-run)
+result=$(docker compose run web bash -c "python manage.py makemigrations --check --dry-run")
 
 if [ "$result" == "No changes detected" ]; then
     echo "Migrations are up to date."

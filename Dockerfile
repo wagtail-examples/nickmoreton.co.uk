@@ -21,4 +21,4 @@ USER nm
 WORKDIR /app
 
     # Copy the current directory contents into the container at /app
-COPY --chown=vds . /app
+COPY --chown=nm . /app
