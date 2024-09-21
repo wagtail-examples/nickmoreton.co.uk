@@ -1,37 +1,88 @@
-# Local backend development environment
-# PORT 8000
+# Makefile for Docker Compose commands
 
+# Variables
+DOCKER_COMPOSE_FILE = docker-compose.yml
+DC = docker compose -f $(DOCKER_COMPOSE_FILE)
+
+# Default target
+.PHONY: help
+help:
+	@echo "Usage: make [target]"
+	@echo ""
+	@echo "Targets:"
+	@echo " Docker Compose commands"
+	@echo "  build      Build the Docker containers"
+	@echo "  up         Start the Docker containers"
+	@echo "  down       Stop and remove the Docker containers"
+	@echo "  destroy    Stop and remove the Docker containers, networks, and volumes"
+	@echo "  runserver  Run the Django development server"
+	@echo "  serve      Serve via npm"
+	@echo ""
+	@echo " Container commands"
+	@echo "  migrate    Run Django migrations"
+	@echo "  superuser  Create a superuser"
+	@echo "  restoredb  Restore the database from a backup"
+	@echo "  exec       Execute a command in a running container"
+	@echo "  logs       Show logs for the containers"
+	@echo "  restart    Restart the containers"
+
+# Build the containers
+.PHONY: build
 build:
-	docker-compose build
+	$(DC) build
 
+# Start the containers
+.PHONY: up
 up:
-	docker-compose up -d
+	$(DC) up -d
 
-migrate:
-	docker-compose exec web python manage.py migrate
+# Stop and remove containers, networks, and volumes
+.PHONY: down
+down:
+	$(DC) down
 
-run:
-	docker-compose exec web python manage.py runserver 0.0.0.0:8000
+# Show logs for containers
+.PHONY: logs
+logs:
+	$(DC) logs
 
-# frontend development
-# PORT 3000
+# Restart the containers
+.PHONY: restart
+restart:
+	$(DC) restart
 
-serve:
-	npm run server
+# Execute a command in a running container
+.PHONY: exec
+exec:
+	@read -p "Enter command to run: " cmd; \
+	$(DC) exec web $$cmd
 
-sh:
-	docker-compose exec web bash
+# Run the Django development server
+.PHONY: runserver
+runserver:
+	$(DC) exec web python manage.py runserver 0.0.0.0:8000
 
-# Miscelaneous commands
-
-superuser:
-	@docker-compose exec web python manage.py shell --command \
-	"from django.contrib.auth import get_user_model; \
-	get_user_model().objects.create_superuser('test', 'test@admin.com', 'test')"
-	@echo superuser created UN: test PW: test EM: test@admin.com
-
+# Stop and remove the Docker containers, networks, and volumes
+.PHONY: destroy
 destroy:
-	docker-compose down -v
+	$(DC) down -v
 
+# Run migrations
+.PHONY: migrate
+migrate:
+	$(DC) exec web python manage.py migrate
+
+# Create a superuser
+.PHONY: superuser
+superuser:
+	$(DC) exec web python manage.py createsuperuser
+
+# Restore the database from a backup
+.PHONY: restoredb
 restoredb:
-	docker-compose exec db bash -c 'mysql -u webapp -pwebapp -h localhost webapp < dbbackups/nickmoreton-db-backup.sql'
+	$(DC) exec db bash -c 'mysql -u webapp -pwebapp -h localhost webapp < dbbackups/nickmoreton-db-backup.sql'
+
+# Serve via npm
+.PHONY: serve
+serve:
+	npm start
