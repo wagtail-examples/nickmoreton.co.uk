@@ -6,35 +6,57 @@ The article for deploying to PythonAnywhere can be found [here](https://www.nick
 
 ## Developer setup (backend)
 
-### Create a virtual environment
+### Copy the .env.example file to .env
 
 ```bash
-pipenv install
+cp .env.example .env
 ```
 
-### Activate the virtual environment
+Then update the values for the environment variables in the .env file.
 
-```bash
-pipenv shell
+### Running the development environment
+
+The development environment uses docker-compose to run the mysql database. The makefile has commands to build the docker image, run the database, run the migrations and run the server. Run `make` to see all the available commands.
+
+First build and run should include the following commands:
+
+```
+make build
+make up
+make migrate
+make runserver
 ```
 
-### Build and run the docker container (Mysql)
+View the site at <http://localhost:8000>
+
+
+## Pull database from production server
 
 ```bash
-docker-compose up --build
+fab pull-db
+```
+### or you can pull it from the s3 bucket
+
+```bash
+fab pull-db-s3
 ```
 
-### Run the initial setup commands
+#### The makefile has a command to load the database from a file
 
 ```bash
-python manage.py migrate
-python manage.py createsuperuser
+make restoredb
 ```
 
-### Run the development server
+## Pull media files from production server
 
 ```bash
-python manage.py runserver
+fab pull-media
+```
+
+### or you can pull it from the s3 bucket
+
+```bash
+fab pull-media-s3
 ```
 
 ## Developer setup (frontend)
@@ -48,14 +70,10 @@ npm install
 
 ### Build & watch the frontend
 
+The django app should be running in the background. The frontend will be served on <http://localhost:3000>
+
 ```bash
 npm start
-```
-
-### Build the frontend
-
-```bash
-npm run build
 ```
 
 ## Deploy to PythonAnywhere

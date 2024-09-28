@@ -32,7 +32,7 @@ repos:
         types: [python]
         pass_filenames: false
         always_run: true
-        stages: [commit]
+        stages: [pre-commit]
       - id: check-static
         name: Check static files
         entry: ./checks/static.sh

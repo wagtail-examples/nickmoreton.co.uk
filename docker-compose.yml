@@ -1,11 +1,24 @@
 services:
+  web:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - path: .env
+        required: false
+    command: tail -f /dev/null
   db:
     image: mysql:8.0.29
     # this is required becuse of 
     # django.db.utils.OperationalError: (2061, 'RSA Encryption not supported - caching_sha2_password plugin was built with GnuTLS support')
     command: --default-authentication-plugin=mysql_native_password
     env_file:
-      - .env
+      - path: .env
+        required: false
     ports:
       - "3306:3306"
     volumes:
