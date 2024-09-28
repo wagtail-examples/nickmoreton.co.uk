@@ -16,44 +16,47 @@ Then update the values for the environment variables in the .env file.
 
 ### Running the development environment
 
-The development environment uses docker-compose to run the mysql database. The makefile has commands to build the docker image, run the database, run the migrations and run the server.
+The development environment uses docker-compose to run the mysql database. The makefile has commands to build the docker image, run the database, run the migrations and run the server. Run `make` to see all the available commands.
+
+First build and run should include the following commands:
 
 ```
 make build
 make up
 make migrate
-make run
-```
-
-### Destroy the development environment
-
-```bash
-make destroy
-```
-
-### Running commands in the development environment
-
-```bash
-make sh
-```
-
-### Miscellaneous commands
-
-```bash
-make superuser # Create a superuser
-make restoredb # Restore the database from a backup in db_data
+make runserver
 ```
 
 View the site at <http://localhost:8000>
 
-## Pull media and database from production
+
+## Pull database from production server
 
 ```bash
 fab pull-db
 ```
+### or you can pull it from the s3 bucket
+
+```bash
+fab pull-db-s3
+```
+
+#### The makefile has a command to load the database from a file
+
+```bash
+make restoredb
+```
+
+## Pull media files from production server
 
 ```bash
 fab pull-media
+```
+
+### or you can pull it from the s3 bucket
+
+```bash
+fab pull-media-s3
 ```
 
 ## Developer setup (frontend)
@@ -67,14 +70,10 @@ npm install
 
 ### Build & watch the frontend
 
+The django app should be running in the background. The frontend will be served on <http://localhost:3000>
+
 ```bash
 npm start
-```
-
-### Build the frontend
-
-```bash
-npm run build
 ```
 
 ## Deploy to PythonAnywhere
