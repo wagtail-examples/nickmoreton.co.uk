@@ -16,10 +16,6 @@
 
 @import "../../node_modules/highlight.js/scss/night-owl.scss";
 
-body {
-    // font-family: $base-font-family;
-}
-
 h1,
 h2,
 h3,
@@ -36,14 +32,10 @@ h2 {
 .button {
     display: inline-flex;
     justify-content: space-between;
-    // margin-bottom: 1rem;
     background-color: $primary-color;
     padding: .25rem 1rem;
     color: white;
     border-radius: 5px;
-    // position: absolute;
-    // top: 0;
-    // right: 0;
     font-size: 0.9rem;
     .icon-arrow {
         transform: translateY(-0.1em);

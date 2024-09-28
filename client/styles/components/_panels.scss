@@ -1,12 +1,14 @@
 #grid-panels {
 
-    h2:first-child {
-        margin-top: 2rem;
-    }
+    /*
+    * Grid layout for panels
+    * Used on Artilces index and Packages index
+    */
 
     .grid-panels {
         display: grid;
         gap: 1rem;
+        margin-bottom: 1rem;
 
         article {
             margin: 0;

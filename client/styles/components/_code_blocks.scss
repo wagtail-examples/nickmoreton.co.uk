@@ -1,16 +1,7 @@
 pre {
-    // margin: 0;
     background-color: transparent;
     code {
-        // max-width: 100%;
         border-radius: .1rem;
-        // border: 1px solid rgba(white, .2);
-        // box-shadow: .5rem .5rem 1rem 0 rgba(black, .3);
-        // display: block;
-        @media  screen and (min-width: $desktop-breakpoint) {
-            // max-width: 800px;
-            // font-size: 1.4rem;
-        }
     }
 }
 
@@ -27,7 +18,6 @@ pre {
         color: $slate-100;
     }
     .copy {
-        // display: none;
         background-color: $dark;
         border-radius: .3rem;
         font-size: .8rem;
@@ -41,9 +31,6 @@ pre {
             margin-top: -1.3rem;
             transition: opacity .2s ease-in-out;
 
-            svg {
-                // margin-right: 1rem;
-            }
             &:hover {
                 .copy {
                     opacity: 0;

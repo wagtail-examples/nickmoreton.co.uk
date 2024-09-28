@@ -35,20 +35,12 @@ aside {
 
     li {
         padding: 0;
-        // border-bottom: 1px solid black;
     }
 
     a {
         font-size: 1rem;
         text-decoration: none;
-        // color: white;
-        // &.active {
-        //     // color: $dark !important;
-        //     color: inherit;
-        // }
     }
-
-    // background-color: $primary-color;
 
     .chapters {
         background-color: $secondary-color;
@@ -65,7 +57,6 @@ aside {
             }
         }
         a.active {
-            // color: $primary-color;
             svg {
                 margin-left: -1.5rem;
                 fill: $darkish;
