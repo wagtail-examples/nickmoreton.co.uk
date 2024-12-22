@@ -25,15 +25,25 @@ help:
 	@echo "  exec       Execute a command in a running container"
 	@echo "  logs       Show logs for the containers"
 	@echo "  restart    Restart the containers"
+	@echo ""
+	@echo " Other commands"
+	@echo "  exportp   Export the production requirements"
+	@echo "  exportd   Export the development requirements"
+	@echo "  exporta   Export all requirements"
 
 # Build the containers
 .PHONY: build
 build:
-	$(DC) build
+	$(DC) build --progress=plain
 
-# Start the containers
+# Start the containers, check for .env file
 .PHONY: up
 up:
+	@if [ ! -f .env ]; then \
+		echo "Error: .env file not found"; \
+		echo "Run 'cp .env.example .env'"; \
+		exit 1; \
+	fi
 	$(DC) up -d
 
 # Stop and remove containers, networks, and volumes
@@ -86,3 +96,21 @@ restoredb:
 .PHONY: serve
 serve:
 	npm start
+
+
+# Export requirements with dev dependencies
+.PHONY: exportd
+exportd:
+	uv export -o requirements.dev.txt --no-hashes --only-dev
+
+# Export requirements without dev dependencies
+.PHONY: exportp
+exportp:
+	uv export -o requirements.prod.txt --no-hashes --no-dev
+
+
+# Export all requirements files
+.PHONY: exporta
+exporta:
+	@make exportd
+	@make exportp
