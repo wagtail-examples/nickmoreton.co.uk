@@ -11,6 +11,7 @@ ALLOWED_HOSTS = ["*"]
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
 
 try:
     from .local import *  # noqa

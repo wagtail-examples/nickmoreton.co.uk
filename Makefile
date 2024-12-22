@@ -4,113 +4,155 @@
 DOCKER_COMPOSE_FILE = docker-compose.yml
 DC = docker compose -f $(DOCKER_COMPOSE_FILE)
 
-# Default target
+# Targets
 .PHONY: help
 help:
 	@echo "Usage: make [target]"
 	@echo ""
-	@echo "Targets:"
-	@echo " Docker Compose commands"
-	@echo "  build      Build the Docker containers"
-	@echo "  up         Start the Docker containers"
-	@echo "  down       Stop and remove the Docker containers"
-	@echo "  destroy    Stop and remove the Docker containers, networks, and volumes"
-	@echo "  runserver  Run the Django development server"
-	@echo "  serve      Serve via npm"
+	@echo "Commands useful for development"
+	@echo "====================================================================="
+	@echo "Database"
+	@echo "========"
+	@echo " dbuild:         Build the Docker containers"
+	@echo " dup:            Start the Docker containers"
+	@echo " ddown:          Stop and remove the Docker containers"
+	@echo " ddestroy:       Stop and remove the Docker containers, networks, and volumes"
+	@echo " dexecdb:        Execute a command in a running container"
+	@echo " drestart:       Restart the containers"
+	@echo " drestoredb:     Restore the database from a backup"
 	@echo ""
-	@echo " Container commands"
-	@echo "  migrate    Run Django migrations"
-	@echo "  superuser  Create a superuser"
-	@echo "  restoredb  Restore the database from a backup"
-	@echo "  exec       Execute a command in a running container"
-	@echo "  logs       Show logs for the containers"
-	@echo "  restart    Restart the containers"
+	@echo "UV"
+	@echo "=="
+	@echo " uvvenv:         Create a virtual environment"
+	@echo " uvsync:         Sync the virtual environment"
+	@echo " uvexportp:      Export the production requirements"
+	@echo " uvexportd:      Export the development requirements"
+	@echo " uvexporta:      Export all requirements"
+	@echo " uvtreetop:	  	Display the top level dependency tree"
 	@echo ""
-	@echo " Other commands"
-	@echo "  exportp   Export the production requirements"
-	@echo "  exportd   Export the development requirements"
-	@echo "  exporta   Export all requirements"
+	@echo "Python"
+	@echo "======"
+	@echo " migrate:        Run Django migrations"
+	@echo " superuser:      Create a superuser"
+	@echo " runserver:      Run the Django development server"
+	@echo ""
+	@echo "Node"
+	@echo "===="
+	@echo " install:        Install npm packages"
+	@echo " start:          Start the development server"
+	@echo " serve:          Serve via npm"
+	@echo ""
+	@echo "Other commands"
+	@echo "=============="
+	@echo "  cleanup:       Clean up the project directory"
+	@echo "====================================================================="
+
+### DOCKER
 
 # Build the containers
-.PHONY: build
-build:
-	$(DC) build --progress=plain
+.PHONY: dbuild
+dbuild:
+	$(DC) --progress plain build
 
 # Start the containers, check for .env file
-.PHONY: up
-up:
+.PHONY: dup
+dup:
 	@if [ ! -f .env ]; then \
 		echo "Error: .env file not found"; \
 		echo "Run 'cp .env.example .env'"; \
 		exit 1; \
 	fi
-	$(DC) up -d
+	$(DC) up -d --remove-orphans
 
 # Stop and remove containers, networks, and volumes
-.PHONY: down
-down:
+.PHONY: ddown
+ddown:
 	$(DC) down
 
-# Show logs for containers
-.PHONY: logs
-logs:
-	$(DC) logs
-
-# Restart the containers
-.PHONY: restart
-restart:
-	$(DC) restart
+# Stop and remove the Docker containers, networks, and volumes
+.PHONY: ddestroy
+ddestroy:
+	$(DC) down -v
 
 # Execute a command in a running container
-.PHONY: exec
-exec:
+.PHONY: dexec
+dexec:
 	@read -p "Enter command to run: " cmd; \
-	$(DC) exec web $$cmd
+	$(DC) exec db $$cmd
 
-# Run the Django development server
-.PHONY: runserver
-runserver:
-	$(DC) exec web python manage.py runserver 0.0.0.0:8000
+# Restart the containers
+.PHONY: drestart
+drestart:
+	$(DC) restart
 
-# Stop and remove the Docker containers, networks, and volumes
-.PHONY: destroy
-destroy:
-	$(DC) down -v
+# Restore the database from a backup
+.PHONY: drestoredb
+drestoredb:
+	$(DC) exec db bash -c 'mysql -u webapp -pwebapp -h localhost webapp < dbbackups/nickmoreton-db-backup.sql'
+
+### UV
+
+# Create a virtual environment
+.PHONY: uvvenv
+uvvenv:
+	uv venv
+
+# Sync the virtual environment
+.PHONY: uvsync
+uvsync:
+	uv sync
+
+# Export requirements with dev dependencies
+.PHONY: uvexportd
+uvexportd:
+	uv export -o requirements.dev.txt --no-hashes --only-dev
+
+# Export requirements without dev dependencies
+.PHONY: uvexportp
+uvexportp:
+	uv export -o requirements.prod.txt --no-hashes --no-dev
+
+# Export all requirements files
+.PHONY: uvexporta
+uvexporta:
+	@make exportd
+	@make exportp
+
+# Display the top level dependency tree
+.PHONY: uvtreetop
+uvtreetop:
+	uv tree --depth=1
+	@echo "Run 'uv tree' for the full dependency tree"
+
+### PYTHON
 
 # Run migrations
 .PHONY: migrate
 migrate:
-	$(DC) exec web python manage.py migrate
+	uv run python manage.py migrate
 
 # Create a superuser
 .PHONY: superuser
 superuser:
-	$(DC) exec web python manage.py createsuperuser
+	uv run python manage.py createsuperuser
 
-# Restore the database from a backup
-.PHONY: restoredb
-restoredb:
-	$(DC) exec db bash -c 'mysql -u webapp -pwebapp -h localhost webapp < dbbackups/nickmoreton-db-backup.sql'
+# Run the Django development server
+.PHONY: runserver
+runserver:
+	uv run python manage.py runserver
 
-# Serve via npm
+### NODE
+
+# NPM Serve
 .PHONY: serve
 serve:
+	npm install
 	npm start
 
-
-# Export requirements with dev dependencies
-.PHONY: exportd
-exportd:
-	uv export -o requirements.dev.txt --no-hashes --only-dev
-
-# Export requirements without dev dependencies
-.PHONY: exportp
-exportp:
-	uv export -o requirements.prod.txt --no-hashes --no-dev
-
-
-# Export all requirements files
-.PHONY: exporta
-exporta:
-	@make exportd
-	@make exportp
+# Clean up the project directory
+.PHONY: cleanup
+cleanup:
+	rm -rf node_modules
+	rm -rf dbbackups
+	rm -rf db_data
+	rm -rf static

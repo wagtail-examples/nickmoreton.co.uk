@@ -9,7 +9,7 @@
   "scripts": {
     "styles": "sass client/styles/index.scss webapp/static/webapp/bundle.css --watch --style=compressed",
     "scripts": "esbuild client/scripts/index.js --bundle --minify --sourcemap --outfile=webapp/static/webapp/bundle.js --watch",
-    "server": "browser-sync start --files \"webapp/static/webapp/bundle.css, webapp/static/webapp/bundle.js, **/*.html, **/*.py\" --proxy \"localhost:8000\" --reload-delay 500 --browser=safari",
+    "server": "browser-sync start --files \"webapp/static/webapp/bundle.css, webapp/static/webapp/bundle.js, **/*.html, **/*.py\" --proxy \"127.0.0.1:8000\"",
     "start": "concurrently \"npm run styles\" \"npm run scripts\" \"npm run server\" --kill-others --success all",
     "ci:check:styles": "sass client/styles/index.scss webapp/static/webapp/bundle.css --style=compressed",
     "ci:check:scripts": "esbuild client/scripts/index.js --bundle --minify --sourcemap --outfile=webapp/static/webapp/bundle.js"
