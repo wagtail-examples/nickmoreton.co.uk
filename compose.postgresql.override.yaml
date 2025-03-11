@@ -1,0 +1,46 @@
+services:
+  # To use this databse service locally
+  # configure it in the Makefile
+  app:
+    build:
+      args:
+        DBMODULE: pip install psycopg2
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: app
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+  db:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 20s
+      retries: 5
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: app
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+
+  # A convienient utility app to manage the database https://hub.docker.com/_/adminer/
+  # Accessible at http://localhost:8080/?pgsql choose postgres as the database type in the UI
+  # server: db
+  # user: app
+  # password: app
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+
+volumes:
+  dbdata:

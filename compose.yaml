@@ -1,0 +1,28 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1
+      DJANGO_SECRET_KEY: app-secret_key
+      WAGTAIL_SITE_NAME: wagtail-starter-kit
+      WAGTAILADMIN_BASE_URL: http://localhost:8000
+    command: tail -f /dev/null
+
+  # A convienient utility app to test 'real' emails https://hub.docker.com/r/mailhog/mailhog/
+  # MailHog is an email testing tool for developers.
+  # It catches all emails sent by your application and allows you to preview them in a web interface.
+  # Accessible at http://localhost:8025
+  mailhog:
+    image: mailhog/mailhog
+    platform: linux/amd64
+    logging:
+      driver: 'none'  # disable saving logs
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui

@@ -1,0 +1,53 @@
+services:
+  # To use this databse service locally
+  # configure it in the Makefile
+  app:
+    build:
+      args:
+        DBMODULE: pip install mysqlclient==2.2.4
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      MYSQL_ROOT_PASSWORD: app
+      MYSQL_DATABASE: app
+      MYSQL_USER: app
+      MYSQL_PASSWORD: app
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+  db:
+    image: mysql:8.0.29
+      # this is required becuse of
+      # django.db.utils.OperationalError: (2061, 'RSA Encryption not supported - caching_sha2_password plugin was built with GnuTLS support')
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 20s
+      retries: 5
+    environment:
+      MYSQL_ROOT_PASSWORD: app
+      MYSQL_DATABASE: app
+      MYSQL_USER: app
+      MYSQL_PASSWORD: app
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+
+  # A convienient utility app to manage the database https://hub.docker.com/_/adminer/
+  # Accessible at http://localhost:8080/?mysql choose mysql as the database type in the UI
+  # server: db
+  # user: app
+  # password: app
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+
+volumes:
+  dbdata:

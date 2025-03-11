@@ -1,0 +1,18 @@
+services:
+  # A convienient utility app to manage the database https://hub.docker.com/r/linuxserver/sqlitebrowser
+  # Accessible at http://localhost:8080
+  sqlitebrowser:
+    image: lscr.io/linuxserver/sqlitebrowser:latest
+    container_name: sqlitebrowser
+    security_opt:
+      - seccomp:unconfined #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /config:/config
+      - /db.sqlite3:/app/db.sqlite3
+    ports:
+      - 8080:3000
+      # - 8081:3001 # optional for ssl access
