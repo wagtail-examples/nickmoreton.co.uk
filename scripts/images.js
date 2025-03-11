@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 // Input and output directories
-const inputDirectory = path.join(__dirname, '../static_src/img/');
-const outputDirectory = path.join(__dirname, '../static_compiled/img/');
+const inputDirectory = path.join(__dirname, '../webapp/static_src/img/');
+const outputDirectory = path.join(__dirname, '../webapp/static_compiled/img/');
 
 // Resizing constraints
 const maxWidth = 1920;

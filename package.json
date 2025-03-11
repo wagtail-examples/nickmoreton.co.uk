@@ -4,10 +4,10 @@
   "description": "A starter kit for Wagatil CMS",
   "main": "index.js",
   "scripts": {
-    "styles": "sass static_src/scss/*.scss webapp/static_compiled/css/bundle.css",
+    "styles": "sass webapp/static_src/scss/*.scss webapp/static_compiled/css/bundle.css",
     "styles:prod": "concurrently \"npm run styles -- --style=compressed\"",
     "styles:watch": "concurrently \"npm run styles -- --style=expanded --watch\"",
-    "scripts": "esbuild --bundle --sourcemap static_src/js/app.js --outfile=webapp/static_compiled/js/bundle.js",
+    "scripts": "esbuild --bundle --sourcemap webapp/static_src/js/app.js --outfile=webapp/static_compiled/js/bundle.js",
     "scripts:prod": "concurrently \"npm run scripts -- --minify\"",
     "scripts:watch": "concurrently \"npm run scripts -- --watch\"",
     "images": "node scripts/images.js",
