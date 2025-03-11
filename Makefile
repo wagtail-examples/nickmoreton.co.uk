@@ -1,9 +1,9 @@
 # Makefile for Docker Compose commands
 
 # --- Un-comment based on the database you want to use --- #
-DC = docker compose -f compose.yaml -f compose.sqlite3.override.yaml # SQLITE Database
+# DC = docker compose -f compose.yaml -f compose.sqlite3.override.yaml # SQLITE Database
 # DC = docker compose -f compose.yaml -f compose.postgresql.override.yaml # PostgreSQL Database
-# DC = docker compose -f compose.yaml -f compose.mysql.override.yaml # MySQL Database
+DC = docker compose -f compose.yaml -f compose.mysql.override.yaml # MySQL Database
 # --- #
 
 .PHONY: help
