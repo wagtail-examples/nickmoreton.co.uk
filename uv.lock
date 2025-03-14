@@ -219,15 +219,6 @@ wheels = [
 ]
 
 [[package]]
-name = "django-cogwheels"
-version = "0.3"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/b6/a5/d3bf15adaaf3de18f5f588b29f0e0feb251e5bf052271d18af51ec117f86/django-cogwheels-0.3.tar.gz", hash = "sha256:848a4d9f2c96c582a4a4f2e7c276dfd95ab3905748cae13bb7c4b365a6717e94", size = 31198 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/9a/3b/2db92c666d39da78cc872da012582dab7bf4f3ff25e8246bd6ebc547e301/django_cogwheels-0.3-py3-none-any.whl", hash = "sha256:197bd05e7114403d7301214b3f8a371c4fb6039cf21c811f099438b167b5ed21", size = 35154 },
-]
-
-[[package]]
 name = "django-filter"
 version = "23.5"
 source = { registry = "https://pypi.org/simple" }
@@ -455,7 +446,6 @@ dependencies = [
     { name = "psycopg2" },
     { name = "requests" },
     { name = "wagtail" },
-    { name = "wagtailmenus" },
     { name = "whitenoise" },
 ]
 
@@ -476,7 +466,6 @@ requires-dist = [
     { name = "psycopg2", specifier = ">=2.9.10" },
     { name = "requests", specifier = "==2.31.0" },
     { name = "wagtail", specifier = "==5.1.1" },
-    { name = "wagtailmenus", specifier = ">=3.1.9" },
     { name = "whitenoise", specifier = "==6.9.0" },
 ]
 
@@ -898,18 +887,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/c4/df/8f7f530011373ff955815d7e4b991098481f602bc3c50c43b2dc8a980375/wagtail-5.1.1.tar.gz", hash = "sha256:211ff0cd7059f968a7fc4385503b20d801c1e68b56f5831e0a6a4fc600a5943f", size = 6224451 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/84/67/097d8b0d2396668884c264a31700adcc08619d81eaf36e5e7923afcba67a/wagtail-5.1.1-py3-none-any.whl", hash = "sha256:e1f1d920bb294c81eafdb415d2bd150d5637e2323bf9df5a34ef53cb86274121", size = 8833239 },
-]
-
-[[package]]
-name = "wagtailmenus"
-version = "3.1.9"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "django-cogwheels" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/86/26/1fdc39dccf0096302b0a190cfa0fb05035a18ee4344c87c4084ef53d4e72/wagtailmenus-3.1.9.tar.gz", hash = "sha256:ce484d06cf901402238ad337fc09ba8842ceff3baa08b4cafaddbb158878cda3", size = 112599 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/d5/4d/dc9f31e8e2568354665b28128cbabb10c6856fe59b666176c58d00371c5a/wagtailmenus-3.1.9-py3-none-any.whl", hash = "sha256:cfcaa942474c20383eed6e01a1ddf1249c7a18bb1a2faa25a744fc28c57a745b", size = 188287 },
 ]
 
 [[package]]
