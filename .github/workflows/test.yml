@@ -30,6 +30,11 @@ jobs:
         with:
           # Install a specific version of uv.
           version: "0.6.6"
+
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
   # requirements:
   #   runs-on: ubuntu-latest
   #   name: Install and Check requirements
