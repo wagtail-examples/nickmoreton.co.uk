@@ -47,6 +47,11 @@ jobs:
             exit 1
           fi
 
+      - name: Check code style
+        run: uv run black --check .
+        run: uv run isort --check .
+        run: uv run flake8 .
+
   # requirements:
   #   runs-on: ubuntu-latest
   #   name: Install and Check requirements
