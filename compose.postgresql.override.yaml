@@ -5,16 +5,14 @@ services:
       db:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgresql://app:app@db:5432/app
+      DATABASE_URL: postgresql://postgres:password@db:5432/webapp
     links:
       - db:db
 
   db:
     image: postgres
     environment:
-      POSTGRES_USER: app
-      POSTGRES_PASSWORD: app
-      POSTGRES_DB: app
+      POSTGRES_DB: webapp
     volumes:
       - dbdata:/var/lib/postgresql/data
     healthcheck:
