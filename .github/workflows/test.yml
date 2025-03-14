@@ -68,6 +68,9 @@ jobs:
       - name: Install the project
         run: npm ci
 
+      # this isn't very robust but eventually the build step swill
+      # happen at build time so the static_compiled directory will
+      # not exist in the repository
       - name: Check static files have been built
         run: |
           npm run build
