@@ -13,11 +13,6 @@ class HomePage(Page):
         blank=True,
         use_json_field=True,
     )
-    fake_field = StreamField(
-        BaseBlocks,
-        blank=True,
-        use_json_field=True,
-    )
 
     content_panels = Page.content_panels + [
         FieldPanel("body"),
