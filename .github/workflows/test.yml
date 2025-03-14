@@ -18,7 +18,7 @@ permissions:
   contents: read # to fetch code (actions/checkout)
 
 jobs:
-  uv:
+  python:
     name: python
     runs-on: ubuntu-latest
 
@@ -52,6 +52,30 @@ jobs:
           uv run black --check .
           uv run isort --check .
           uv run flake8 .
+
+  node:
+    name: node
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install the project
+        run: npm ci
+
+      - name: Check static files have been built
+        run: |
+          npm run build
+          if ! git diff --exit-code static_compiled; then
+            echo "static_compiled is not up to date. Please update it."
+            exit 1
+          fi
+
 
   # requirements:
   #   runs-on: ubuntu-latest
