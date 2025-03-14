@@ -110,6 +110,7 @@ requirements:
 	uv export --no-hashes --no-dev --output-file requirements.txt --locked
 
 # Clean up
+# rm -rf ./webapp/static_compiled; \ add when needed
 .PHONY: clean
 clean:
 	@echo "WARNING:"
@@ -119,8 +120,24 @@ clean:
 	if [[ $$REPLY =~ ^[Yy]$$ ]]; then \
 		make destroy; \
 		rm -rf ./node_modules ./static ./media db.sqlite3; \
-		rm -rf ./webapp/static_compiled; \
 		echo "Cleaned up"; \
 	else \
 		echo "Aborted"; \
 	fi
+
+# TEMPORARY COMMANDS
+.PHONY: dumpdata
+dumpdata:
+	$(DC) exec app python manage.py dumpdata --indent 2 --natural-foreign \
+	-e contenttypes \
+	-e wagtailimages.rendition \
+	-e wagtailsearch > dumps/data.json
+
+.PHONY: restoredb
+restoredb:
+	$(DC) exec app python manage.py loaddata dumps/data.json
+
+.PHONY: copyimages
+copyimages:
+	mkdir -p media/original_images
+	cp -R mediabackups/original_images/* media/original_images
