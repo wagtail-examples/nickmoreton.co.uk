@@ -1,13 +1,15 @@
 {
-  "name": "wagtail-starter-kit",
+  "name": "nickmoreton",
   "version": "1.0.0",
-  "description": "A starter kit for Wagatil CMS",
+  "description": "Wagtail CMS for nickmoreton.co.uk",
   "main": "index.js",
+  "author": "Nick Moreton <nickmoreton@me.com>",
+  "license": "MIT",
   "scripts": {
-    "styles": "sass webapp/static_src/scss/*.scss webapp/static_compiled/css/bundle.css",
+    "styles": "sass webapp/static_src/styles/index.scss webapp/static_compiled/css/bundle.css",
     "styles:prod": "concurrently \"npm run styles -- --style=compressed\"",
     "styles:watch": "concurrently \"npm run styles -- --style=expanded --watch\"",
-    "scripts": "esbuild --bundle --sourcemap webapp/static_src/js/app.js --outfile=webapp/static_compiled/js/bundle.js",
+    "scripts": "esbuild --bundle --sourcemap webapp/static_src/scripts/index.js --outfile=webapp/static_compiled/js/bundle.js",
     "scripts:prod": "concurrently \"npm run scripts -- --minify\"",
     "scripts:watch": "concurrently \"npm run scripts -- --watch\"",
     "images": "node scripts/images.js",
@@ -16,24 +18,12 @@
     "build": "concurrently \"npm run styles:prod\" \"npm run scripts:prod\" \"npm run images\"",
     "start": "concurrently \"npm run clean\" \"npm run styles:watch\" \"npm run scripts:watch\" \"npm run images\" \"npm run server\""
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wagtail-examples/wagtail-starter-kit.git"
-  },
-  "keywords": [
-    "wagtail"
-  ],
-  "author": "Nick Moreton <nickmoreton@me.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/wagtail-examples/wagtail-starter-kit/issues"
-  },
-  "homepage": "https://github.com/wagtail-examples/wagtail-starter-kit#readme",
   "devDependencies": {
     "@picocss/pico": "^2.0.6",
     "browser-sync": "^3.0.3",
     "concurrently": "^9.1.2",
     "esbuild": "^0.24.2",
+    "highlight.js": "^11.11.1",
     "sass": "1.76",
     "sharp": "^0.33.5"
   }

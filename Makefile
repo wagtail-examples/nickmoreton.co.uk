@@ -1,10 +1,10 @@
-# Makefile for Docker Compose commands
+#!make
 
-# --- Un-comment based on the database you want to use --- #
-# DC = docker compose -f compose.yaml -f compose.sqlite3.override.yaml # SQLITE Database
-# DC = docker compose -f compose.yaml -f compose.postgresql.override.yaml # PostgreSQL Database
-DC = docker compose -f compose.yaml -f compose.mysql.override.yaml # MySQL Database
-# --- #
+# Sets the path to the Docker Compose command
+# At some point this shouldn't be necessary, but it is for now
+# until is database is migrated to postgres from mysql which is currently used
+# in the project on python anywhere
+include .env
 
 .PHONY: help
 help:
@@ -112,9 +112,15 @@ requirements:
 # Clean up
 .PHONY: clean
 clean:
-	@echo "This will remove all generated files and folders (node_modules, static, media + db.sqlite3)"
+	@echo "WARNING:"
+	@echo "This will destroy all data in the database and remove all generated files and folders (node_modules, static, media)"
 	@read -p "Are you sure? [y/N] " -n 1 -r; \
 	echo; \
 	if [[ $$REPLY =~ ^[Yy]$$ ]]; then \
-		rm -rf ./node_modules ./static ./static_compiled ./media db.sqlite3; \
+		make destroy; \
+		rm -rf ./node_modules ./static ./media db.sqlite3; \
+		rm -rf ./webapp/static_compiled; \
+		echo "Cleaned up"; \
+	else \
+		echo "Aborted"; \
 	fi

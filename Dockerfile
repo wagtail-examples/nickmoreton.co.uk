@@ -1,31 +1,26 @@
-FROM node:20
+# Currently used for development only
+# Heroku deployments are via buildpacks
+# STATIC
+FROM node:22 AS static
 
 COPY package.json package-lock.json ./
 RUN npm install
 
-COPY ./static_src/ ./static_src/
+COPY ./webapp/static_src/ ./webapp/static_src/
 COPY ./scripts/ ./scripts/
 RUN npm run build
 
-# Use an official Python runtime based on Debian 10 "buster" as a parent image.
-FROM python:3.10-bookworm
 
-# Sets the database module to be used, if not using SQLite.
-ARG DBMODULE
+# BASE
+FROM python:3.10-bookworm AS base
 
-# Add user that will be used in the container.
 RUN useradd wagtail
 
-# Port used by this container to serve HTTP.
 EXPOSE 8000
 
-# Set environment variables.
-# 1. Force Python stdout and stderr streams to be unbuffered.
-# 2. Set PORT variable that is used by Gunicorn. This should match "EXPOSE"
-#    command.
 ENV PYTHONUNBUFFERED=1 \
-    PORT=8000 \
-    DBMODULE=${DBMODULE}
+    PYTHONDONTWRITEBYTECODE=1 \
+    PORT=8000
 
 # Install system packages required by Wagtail and Django.
 RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
@@ -42,12 +37,11 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
 # Install the project requirements.
 COPY requirements.txt /
 RUN pip install -U pip && pip install -r /requirements.txt
-RUN ${DBMODULE}
 
 # Use /app folder as a directory where the source code is stored.
 WORKDIR /app
 
-COPY --from=0 ./static_compiled ./static_compiled
+COPY --from=static ./webapp/static_compiled ./webapp/static_compiled
 
 # Set this directory to be owned by the "wagtail" user. This Wagtail project
 # uses SQLite, the folder needs to be owned by the user that
@@ -73,3 +67,7 @@ RUN python manage.py collectstatic --noinput --clear
 #   phase facilities of your hosting platform. This is used only so the
 #   Wagtail instance can be started with a simple "docker run" command.
 # CMD set -xe; python manage.py migrate --noinput; gunicorn app.wsgi:application
+
+FROM base AS development
+
+CMD tail -f /dev/null
