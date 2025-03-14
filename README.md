@@ -1,6 +1,6 @@
-# My Wagtail CMS
+# A Wagtail CMS
 
-This is the source code for my website, [nickmoreton.co.uk](https://www.nickmoreton.co.uk).
+This is the source code for my website, [www.nickmoreton.co.uk](https://www.nickmoreton.co.uk)
 
 ## Developer setup (backend)
 
@@ -10,19 +10,27 @@ Copy the `.env.example` file to `.env` and un-comment one of the docker-compose 
 cp .env.example .env
 ```
 
-### Running the development environment
+Supports the following databases:
+
+- MySQL
+- PostgreSQL
+- SQLite
+
+## Running the development environment
 
 Run `make` to see all the available commands.
 
-The development environment uses docker-compose to run the mysql database. The makefile has commands to build the docker image, run the database, run the migrations and run the server. Run `make` to see all the available commands.
+The development environment uses docker-compose to run the site with a specific database during development.
 
-#### Quick start
+### Quick start
 
 ```bash
 make quickstart
 ```
 
-#### Full setup
+The quickstart will also perform and initial build of the frontend assets.
+
+## Manual setup
 
 First build and run should include the following commands:
 
@@ -35,35 +43,13 @@ make runserver
 
 View the site at <http://localhost:8000>
 
-
-## Pull database from production server
-
-```bash
-fab pull-db
-```
-### or you can pull it from the s3 bucket
+## Create a superuser
 
 ```bash
-fab pull-db-s3
+make superuser
 ```
 
-#### The makefile has a command to load the database from a file
-
-```bash
-make restoredb
-```
-
-## Pull media files from production server
-
-```bash
-fab pull-media
-```
-
-### or you can pull it from the s3 bucket
-
-```bash
-fab pull-media-s3
-```
+View the admin at <http://localhost:8000/admin>
 
 ## Developer setup (frontend)
 
@@ -76,16 +62,14 @@ npm install
 
 ### Build & watch the frontend
 
-The django app should be running in the background. The frontend will be served on <http://localhost:3000>
+The wagtail app should be running in the background. The frontend will be served on <http://localhost:3000>
 
 ```bash
 npm start
 ```
 
-## Deploy to PythonAnywhere
+### Build the frontend
 
-See the article [here](https://staging.nickmoreton.co.uk/articles/deploy-wagtail-cms-to-pythonanywhere/starting-a-deployment/)
-
-## Development utils
-
-See the article [here](https://github.com/wagtail-examples/tutorial-deploy-pythonanywhere-paid/blob/main/docs/more/e-database-backup-and-restore.md) for DB and [here](https://github.com/wagtail-examples/tutorial-deploy-pythonanywhere-paid/blob/main/docs/more/f-media-files-backup-and-restore.md) for Media files
+```bash
+npm run build
+```
