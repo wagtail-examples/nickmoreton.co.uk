@@ -53,6 +53,12 @@ jobs:
           uv run isort --check .
           uv run flake8 .
 
+      - name: Check migrations
+        run: uv run python manage.py makemigrations --check --dry-run
+
+      - name: Run tests
+        run: uv run manage.py test
+
   node:
     name: node
     runs-on: ubuntu-latest
