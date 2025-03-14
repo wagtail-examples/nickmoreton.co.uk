@@ -71,7 +71,7 @@ jobs:
       - name: Check static files have been built
         run: |
           npm run build
-          if ! git diff --exit-code static_compiled/css/bundle.css; then
+          if ! git diff --exit-code webapp/static_compiled/css/bundle.css; then
             echo "static_compiled is not up to date. Please update it."
             exit 1
           fi
