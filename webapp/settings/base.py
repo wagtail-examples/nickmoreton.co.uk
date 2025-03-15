@@ -188,7 +188,7 @@ if "AWS_STORAGE_BUCKET_NAME" in env_vars:
     INSTALLED_APPS.append("storages")
 
     # https://docs.djangoproject.com/en/stable/ref/settings/#default-file-storage
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    STORAGES["default"]["BACKEND"] = "storages.backends.s3boto3.S3Boto3Storage"
 
     AWS_STORAGE_BUCKET_NAME = env_vars["AWS_STORAGE_BUCKET_NAME"]
 
