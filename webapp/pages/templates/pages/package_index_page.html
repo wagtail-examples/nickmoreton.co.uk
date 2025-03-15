@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
 
+{% block body_class %}template-packages{% endblock %}
+
 {% block header %}
-<header class="short">
+<header>
     <div class="container">
         <h1>{{ page.title }}</h1>
     </div>
@@ -10,30 +12,36 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+
     {% for block in page.body %}
     {% include_block block %}
     {% endfor %}
-    <ul class="list article-list">
-        {% for package in packages %}
-            <li>
-                <a href="{{ package.url }}">
-                    <span class="title">{{ package.title }}</span>
-                    <span class="white no-decoration smaller">{{ package.excerpt }}</span>
-                    <span class="arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32">
-                            <title>arrow right</title>
-                            <g stroke-linecap="square" stroke-width="2" fill="none" stroke="#ffffff" stroke-linejoin="miter"
-                                class="nc-icon-wrapper" stroke-miterlimit="10">
-                                <line data-cap="butt" x1="2" y1="16" x2="30" y2="16" stroke-linecap="butt" stroke="#ffffff">
-                                </line>
-                                <polyline points="21,7 30,16 21,25 "></polyline>
-                            </g>
-                        </svg>
-                    </span>
-                </a>
-            </li>
-        {% endfor %}
-    </ul>    
-</div>
+
+        <div id="grid-panels" class="packages">
+
+            <div class="grid-panels">
+            {% for package in packages %}
+
+                    <a href="{{ package.url }}">
+                        <article>
+                            <span class="title">{{ package.title }}</span>
+                            <span class="excerpt">{{ package.excerpt }}</span>
+                            <span class="arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32">
+                                    <title>arrow right</title>
+                                    <g stroke-linecap="square" stroke-width="2" fill="none" stroke="#ffffff" stroke-linejoin="miter"
+                                        class="nc-icon-wrapper" stroke-miterlimit="10">
+                                        <line data-cap="butt" x1="2" y1="16" x2="30" y2="16" stroke-linecap="butt" stroke="#ffffff">
+                                        </line>
+                                        <polyline points="21,7 30,16 21,25 "></polyline>
+                                    </g>
+                                </svg>
+                            </span>
+                        </article>
+                    </a>
+
+            {% endfor %}
+        </div>
+        </div>
+
 {% endblock %}

@@ -13,10 +13,17 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+import dj_database_url
+
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 env_vars = os.environ.copy()
+
+# The `DYNO` env var is set on Heroku CI, but it's not a real Heroku app, so we have to
+# also explicitly exclude CI:
+# https://devcenter.heroku.com/articles/heroku-ci#immutable-environment-variables
+IS_HEROKU_APP = "DYNO" in os.environ and "CI" not in os.environ
 
 if "DJANGO_SECRET_KEY" in env_vars:
     SECRET_KEY = env_vars["DJANGO_SECRET_KEY"]
@@ -93,18 +100,61 @@ WSGI_APPLICATION = "webapp.wsgi.application"
 
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": env_vars["MYSQL_DATABASE"] if "MYSQL_DATABASE" in env_vars else "",
-        "USER": env_vars["MYSQL_USER"] if "MYSQL_USER" in env_vars else "",
-        "PASSWORD": env_vars["MYSQL_PASSWORD"] if "MYSQL_PASSWORD" in env_vars else "",
-        "HOST": env_vars["MYSQL_HOST"] if "MYSQL_HOST" in env_vars else "",
-        "PORT": env_vars["MYSQL_PORT"] if "MYSQL_PORT" in env_vars else "",
+if "DATABASE_URL" in env_vars:
+    DATABASES = {
+        "default": dj_database_url.config(conn_max_age=600),
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        }
+    }
+
+
+# if IS_HEROKU_APP:
+#     DATABASES = {
+#         "default": dj_database_url.config(
+#             env="DATABASE_URL",
+#             conn_max_age=600,
+#             conn_health_checks=True,
+#             ssl_require=True,
+#         ),
+#     }
+# elif "POSTGRES_DATABASE_URL" in env_vars and not IS_HEROKU_APP:
+# DATABASES = {
+#     "default": dj_database_url.config(
+#         conn_max_age=600, default="postgres://postgres:password@localhost:5432/app-db"
+#     ),
+# }
+# elif "MYSQL_DATABASE_URL" in env_vars and not IS_HEROKU_APP:
+#     DATABASES = {
+#         "default": dj_database_url.config(
+#             env="MYSQL_DATABASE_URL",
+#             conn_max_age=600,
+#             conn_health_checks=True,
+#             ssl_require=True,
+#         ),
+#     }
+# else:
+# DATABASES = {
+#     "default": dj_database_url.config(
+#         env="DATABASE_URL",
+#         conn_max_age=600,
+#         conn_health_checks=True,
+#         ssl_require=True,
+#     ),
+# }
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+#     }
+# }
 
 
 # Password validation
@@ -149,12 +199,12 @@ STATICFILES_FINDERS = [
 ]
 
 STATICFILES_DIRS = [
-    os.path.join(PROJECT_DIR, "static"),
+    os.path.join(PROJECT_DIR, "static_compiled"),
 ]
 
 # ManifestStaticFilesStorage is recommended in production, to prevent outdated
 # JavaScript / CSS assets being served from cache (e.g. after a Wagtail upgrade).
-# See https://docs.djangoproject.com/en/4.2/ref/contrib/staticfiles/#manifeststaticfilesstorage
+# See https://docs.djangoproject.com/en/{{ docs_version }}/ref/contrib/staticfiles/#manifeststaticfilesstorage
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")

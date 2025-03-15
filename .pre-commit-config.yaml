@@ -1,43 +1,13 @@
 repos:
   - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
+    rev: 6.0.1
     hooks:
       - id: isort
   - repo: https://github.com/psf/black
-    rev: 23.7.0
+    rev: 25.1.0
     hooks:
       - id: black
   - repo: https://github.com/pycqa/flake8
-    rev: 6.1.0
+    rev: 7.1.2
     hooks:
       - id: flake8
-
-  # These hooks make sure that the requirements.txt file is up to date
-  # with the latest changes to pipenv as well as making sure migrations
-  # are up to date and that static files are production ready.
-  - repo: local
-    hooks:
-      - id: check-dependencies
-        name: Check dependencies
-        entry: ./checks/dependencies.sh
-        language: system
-        types: [python]
-        pass_filenames: false
-        always_run: true
-        stages: [pre-commit]
-      - id: check-migrations
-        name: Check migrations
-        entry: ./checks/migrations.sh
-        language: system
-        types: [python]
-        pass_filenames: false
-        always_run: true
-        stages: [commit]
-      - id: check-static
-        name: Check static files
-        entry: ./checks/static.sh
-        language: system
-        types: [css, javascript]
-        pass_filenames: false
-        always_run: true
-        stages: [pre-commit]

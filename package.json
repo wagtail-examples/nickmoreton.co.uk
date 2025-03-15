@@ -1,28 +1,30 @@
 {
-  "name": "nickmoreton.co.uk",
+  "name": "nickmoreton",
   "version": "1.0.0",
-  "description": "The official [Wagtail documentation](https://wagtail.org) is excellent and I suggest you read the [Developer Documentation](https://docs.wagtail.org/en/stable/), specifically the [Your first wagtail site](https://docs.wagtail.org/en/stable/getting_started/tutorial.html) but I wanted to document the process I go through to build a Wagtail site from scratch.",
-  "main": "webpack.config.js",
-  "directories": {
-    "doc": "docs"
-  },
+  "description": "Wagtail CMS for nickmoreton.co.uk",
+  "main": "index.js",
+  "author": "Nick Moreton <nickmoreton@me.com>",
+  "license": "MIT",
   "scripts": {
-    "build": "webpack --mode production",
-    "start": "webpack --mode development --watch"
+    "styles": "sass webapp/static_src/styles/index.scss webapp/static_compiled/css/bundle.css",
+    "styles:prod": "concurrently \"npm run styles -- --style=compressed\"",
+    "styles:watch": "concurrently \"npm run styles -- --style=expanded --watch\"",
+    "scripts": "esbuild --bundle --sourcemap webapp/static_src/scripts/index.js --outfile=webapp/static_compiled/js/bundle.js",
+    "scripts:prod": "concurrently \"npm run scripts -- --minify\"",
+    "scripts:watch": "concurrently \"npm run scripts -- --watch\"",
+    "images": "node scripts/images.js",
+    "clean": "rm -rf static_compiled",
+    "server": "node scripts/server.js",
+    "build": "concurrently \"npm run styles:prod\" \"npm run scripts:prod\" \"npm run images\"",
+    "start": "concurrently \"npm run clean\" \"npm run styles:watch\" \"npm run scripts:watch\" \"npm run images\" \"npm run server\""
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "@babel/preset-env": "^7.22.10",
-    "babel-loader": "^9.1.3",
-    "browser-sync-webpack-plugin": "^2.3.0",
-    "css-loader": "^6.8.1",
-    "highlight.js": "^11.8.0",
-    "mini-css-extract-plugin": "^2.7.6",
-    "sass": "^1.66.1",
-    "sass-loader": "^13.3.2",
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1"
+    "@picocss/pico": "^2.0.6",
+    "browser-sync": "^3.0.3",
+    "concurrently": "^9.1.2",
+    "esbuild": "^0.24.2",
+    "highlight.js": "^11.11.1",
+    "sass": "1.76",
+    "sharp": "^0.33.5"
   }
 }
