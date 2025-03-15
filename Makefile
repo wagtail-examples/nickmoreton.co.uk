@@ -158,3 +158,9 @@ loaddata:
 copyimages:
 	mkdir -p media/original_images
 	cp -R ../nickmoreton.co.uk-saves/mediabackups/original_images/* media/original_images
+
+
+.PHONY: backupdb
+backupdb:
+	$(DC) exec db sh -c 'pg_dump -Fp --no-acl --no-owner postgresql://postgres:password@db:5432/webapp' \
+	> ../nickmoreton.co.uk-saves/psqlbackups/nickmoreton.dump
