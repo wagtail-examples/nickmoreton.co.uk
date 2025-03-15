@@ -18,7 +18,6 @@ class ArticleIndexPage(BasePage):
     body = StreamField(
         BaseBlocks,
         blank=True,
-        use_json_field=True,
     )
     content_panels = Page.content_panels + [
         FieldPanel("body"),
@@ -36,7 +35,6 @@ class ArticlePageBase(BasePage):
     body = StreamField(
         BaseBlocks,
         blank=True,
-        use_json_field=True,
     )
     excerpt = models.CharField(max_length=255, blank=True)
 
@@ -133,7 +131,6 @@ class PackageIndexPage(BasePage):
     body = StreamField(
         BaseBlocks,
         blank=True,
-        use_json_field=True,
     )
     content_panels = Page.content_panels + [
         FieldPanel("body"),
@@ -152,7 +149,6 @@ class PackagePage(BasePage):
     body = StreamField(
         BaseBlocks,
         blank=True,
-        use_json_field=True,
     )
     date = models.DateField("Package published date")
     excerpt = models.CharField(max_length=255, blank=True)
