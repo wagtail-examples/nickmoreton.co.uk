@@ -128,14 +128,33 @@ clean:
 # TEMPORARY COMMANDS
 .PHONY: dumpdata
 dumpdata:
-	$(DC) exec app python manage.py dumpdata --indent 2 --natural-foreign \
-	-e contenttypes \
-	-e wagtailimages.rendition \
-	-e wagtailsearch > dumps/data.json
+	mkdir -p fixtures/core
+	$(DC) exec app python manage.py dumpdata core.Navigation --indent 2 > fixtures/core/data.json
+	mkdir -p fixtures/home
+	$(DC) exec app python manage.py dumpdata home.HomePage --indent 2 > fixtures/home/data.json
+	mkdir -p fixtures/pages
+	$(DC) exec app python manage.py dumpdata pages.ArticleIndexPage \
+		pages.ArticlePage \
+		pages.ArticleChapterPage \
+		pages.PackageIndexPage \
+		pages.PackagePage \
+		--indent 2 > fixtures/pages/data.json
+	mkdir -p fixtures/users
+	$(DC) exec app python manage.py dumpdata auth.User --indent 2 > fixtures/users/data.json
+	mkdir -p fixtures/wagtailcore
+	$(DC) exec app python manage.py dumpdata \
+		wagtailcore.site \
+		wagtailcore.page \
+		wagtailcore.revision \
+		wagtailcore.grouppagepermission \
+		wagtailcore.groupcollectionpermission --indent 2 > fixtures/wagtailcore/data.json
+	mkdir -p fixtures/wagtailimages
+	$(DC) exec app python manage.py dumpdata \
+		wagtailimages.image --indent 2 > fixtures/wagtailimages/data.json
 
-.PHONY: restoredb
-restoredb:
-	$(DC) exec app python manage.py loaddata dumps/data.json
+.PHONY: loaddata
+loaddata:
+	$(DC) exec app python manage.py loaddata fixtures/**/*.json
 
 .PHONY: copyimages
 copyimages:
