@@ -72,6 +72,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
@@ -113,48 +114,6 @@ else:
             "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
         }
     }
-
-
-# if IS_HEROKU_APP:
-#     DATABASES = {
-#         "default": dj_database_url.config(
-#             env="DATABASE_URL",
-#             conn_max_age=600,
-#             conn_health_checks=True,
-#             ssl_require=True,
-#         ),
-#     }
-# elif "POSTGRES_DATABASE_URL" in env_vars and not IS_HEROKU_APP:
-# DATABASES = {
-#     "default": dj_database_url.config(
-#         conn_max_age=600, default="postgres://postgres:password@localhost:5432/app-db"
-#     ),
-# }
-# elif "MYSQL_DATABASE_URL" in env_vars and not IS_HEROKU_APP:
-#     DATABASES = {
-#         "default": dj_database_url.config(
-#             env="MYSQL_DATABASE_URL",
-#             conn_max_age=600,
-#             conn_health_checks=True,
-#             ssl_require=True,
-#         ),
-#     }
-# else:
-# DATABASES = {
-#     "default": dj_database_url.config(
-#         env="DATABASE_URL",
-#         conn_max_age=600,
-#         conn_health_checks=True,
-#         ssl_require=True,
-#     ),
-# }
-
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-#     }
-# }
 
 
 # Password validation
@@ -205,7 +164,7 @@ STATICFILES_DIRS = [
 # ManifestStaticFilesStorage is recommended in production, to prevent outdated
 # JavaScript / CSS assets being served from cache (e.g. after a Wagtail upgrade).
 # See https://docs.djangoproject.com/en/{{ docs_version }}/ref/contrib/staticfiles/#manifeststaticfilesstorage
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = "/static/"
