@@ -4,7 +4,7 @@ from wagtail.models import Page
 
 
 def search(request):
-    # migration errors where seen here at wagtail 6.0
+    # migration errors seen here at wagtail 6.0
     # but as im not using the search_promotions module
     # i will comment it out
     search_query = request.GET.get("query", None)
