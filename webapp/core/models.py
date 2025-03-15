@@ -18,5 +18,4 @@ class Navigation(BaseSiteSetting):
             ),
         ],
         blank=True,
-        use_json_field=True,
     )
