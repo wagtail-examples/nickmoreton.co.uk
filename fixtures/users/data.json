@@ -1,0 +1,20 @@
+[
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$390000$smWZFFJzWeFaQOhY5U0p7k$y5fxXNEp5JHMrz4CD+U69oS/BgCz+Tevp2jVAciJFKc=",
+    "last_login": "2025-03-15T11:36:55.997Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "nickmoreton@me.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2023-08-28T15:21:37.673Z",
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]
