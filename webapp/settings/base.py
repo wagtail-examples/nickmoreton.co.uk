@@ -172,6 +172,41 @@ STATIC_URL = "/static/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
+# Three required environment variables are:
+#  * AWS_STORAGE_BUCKET_NAME
+#  * AWS_ACCESS_KEY_ID
+#  * AWS_SECRET_ACCESS_KEY
+# The last two are picked up by boto3:
+# https://boto3.amazonaws.com/v1/documentation/api/latest/guide/configuration.html#environment-variables
+if "AWS_STORAGE_BUCKET_NAME" in env_vars:
+    # Add django-storages to the installed apps
+    INSTALLED_APPS.append("storages")
+
+    # https://docs.djangoproject.com/en/stable/ref/settings/#default-file-storage
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+    AWS_STORAGE_BUCKET_NAME = env_vars["AWS_STORAGE_BUCKET_NAME"]
+
+    # Disables signing of the S3 objects' URLs. When set to True it
+    # will append authorization querystring to each URL.
+    AWS_QUERYSTRING_AUTH = False
+
+    # Do not allow overriding files on S3 as per Wagtail docs recommendation:
+    # https://docs.wagtail.io/en/stable/advanced_topics/deploying.html#cloud-storage
+    # Not having this setting may have consequences in losing files.
+    AWS_S3_FILE_OVERWRITE = False
+
+    # We generally use this setting in the production to put the S3 bucket
+    # behind a CDN using a custom domain, e.g. media.llamasavers.com.
+    # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#cloudfront
+    if "AWS_S3_CUSTOM_DOMAIN" in env_vars:
+        AWS_S3_CUSTOM_DOMAIN = env_vars["AWS_S3_CUSTOM_DOMAIN"]
+
+    # This settings lets you force using http or https protocol when generating
+    # the URLs to the files. Set https as default.
+    # https://github.com/jschneier/django-storages/blob/10d1929de5e0318dbd63d715db4bebc9a42257b5/storages/backends/s3boto3.py#L217
+    AWS_S3_URL_PROTOCOL = env_vars.get("AWS_S3_URL_PROTOCOL", "https:")
+
 
 # Wagtail settings
 
