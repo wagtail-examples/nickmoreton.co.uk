@@ -145,9 +145,7 @@ dumpdata:
 	$(DC) exec app python manage.py dumpdata \
 		wagtailcore.site \
 		wagtailcore.page \
-		wagtailcore.revision \
-		wagtailcore.grouppagepermission \
-		wagtailcore.groupcollectionpermission --indent 2 > fixtures/wagtailcore/data.json
+		wagtailcore.revision --indent 2 > fixtures/wagtailcore/data.json
 	mkdir -p fixtures/wagtailimages
 	$(DC) exec app python manage.py dumpdata \
 		wagtailimages.image --indent 2 > fixtures/wagtailimages/data.json
@@ -159,4 +157,4 @@ loaddata:
 .PHONY: copyimages
 copyimages:
 	mkdir -p media/original_images
-	cp -R mediabackups/original_images/* media/original_images
+	cp -R ../nickmoreton.co.uk-saves/mediabackups/original_images/* media/original_images
