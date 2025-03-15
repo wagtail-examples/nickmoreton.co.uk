@@ -521,7 +521,7 @@ requires-dist = [
     { name = "mysqlclient", specifier = "==2.2.0" },
     { name = "psycopg2", specifier = ">=2.9.10" },
     { name = "requests", specifier = "==2.31.0" },
-    { name = "wagtail", specifier = ">=5.1,<5.2" },
+    { name = "wagtail", specifier = ">=5.2,<5.3" },
     { name = "whitenoise", specifier = "==6.9.0" },
 ]
 
@@ -943,7 +943,7 @@ wheels = [
 
 [[package]]
 name = "wagtail"
-version = "5.1.3"
+version = "5.2.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyascii" },
@@ -964,9 +964,9 @@ dependencies = [
     { name = "telepath" },
     { name = "willow", extra = ["heif"] },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c7/ed/667a07b9b3a014469aceb70950e5a74b4ee2fcb597e9ecfb2ae6545c67d9/wagtail-5.1.3.tar.gz", hash = "sha256:45fac794e4c20c7e75b018069d7f9761f25faa3619ef30df24013ca24abf9a74", size = 6261667 }
+sdist = { url = "https://files.pythonhosted.org/packages/36/13/a45e3a18a3e2b503fad7c7bc581d8e82c3cbaff101de8834feaa9005f87c/wagtail-5.2.8.tar.gz", hash = "sha256:92262336a6744de1b3015ae3c04135edd5e4d7722fb2e99e1b6e9191686bc3f9", size = 6390120 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/3b/5a/289cb92d881ad10a8d2efd7e57ba9d0d6f9e2ebeca6c4c5c78b48c29eb43/wagtail-5.1.3-py3-none-any.whl", hash = "sha256:f4a6cc2adc40f687d8fb62fed2d4fc0804941dfa45b4624887f260dc6cf6b9f2", size = 8885637 },
+    { url = "https://files.pythonhosted.org/packages/85/53/69c569334486dd9bc84d941c08f4f563a58dbcca2db20d0f4b5ef176e0de/wagtail-5.2.8-py3-none-any.whl", hash = "sha256:dc2bfa1b7f434515182bc81c7a6e7a3b59c93f15f3ccd06c6389de2f26e4099d", size = 9009518 },
 ]
 
 [[package]]
