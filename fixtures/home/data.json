@@ -1,9 +1,0 @@
-[
-{
-  "model": "home.homepage",
-  "pk": 3,
-  "fields": {
-    "body": "[{\"id\": \"7d5b1f49-7c6c-4cc6-8f72-48ec28825611\", \"type\": \"code\", \"value\": {\"code\": \"who_am_i:\\r\\n  name: \\\"Nick Moreton\\\"\\r\\n  works_at: https://torchbox.com\\r\\n  preferred_cms: https://wagtail.org\", \"language\": \"yaml\"}}]"
-  }
-}
-]
