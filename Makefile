@@ -1,35 +1,43 @@
 #!make
 
-# Sets the path to the Docker Compose command
-# At some point this shouldn't be necessary, but it is for now
-# until is database is migrated to postgres from mysql which is currently used
-# in the project on python anywhere
 include .env
+
+DC=docker compose -f docker-compose.yaml
+DC_APP=app
+MANAGE=python manage.py
 
 .PHONY: help
 help:
+	@echo ""
 	@echo "Usage: make [target]"
 	@echo ""
-	@echo "Docker Compose commands"
-	@echo " build          Build the Docker containers"
-	@echo " up             Start the Docker containers"
-	@echo " down           Stop and remove the Docker containers"
-	@echo " destroy        Stop and remove the Docker containers, networks, and volumes"
-	@echo " run            Run the Django development server"
+	@echo "Docker Compose targets"
+	@echo "======================="
+	@echo "build          Build the Docker containers"
+	@echo "down           Stop and remove the Docker containers"
+	@echo "destroy        Stop and remove the Docker containers, networks, and volumes"
+	@echo "run            Run the Django development server"
+	@echo "up             Start the Docker containers"
 	@echo ""
-	@echo "Container commands"
-	@echo " migrate        Run Django migrations"
-	@echo " superuser      Create a superuser"
-	@echo " restoredb      Restore the database from a backup"
-	@echo " sh             Execute a command in a running container"
-	@echo " restart        Restart the containers"
+	@echo "Container targets"
+	@echo "================="
+	@echo "collectstatic  Collect static files"
+	@echo "migrate        Run Django migrations"
+	@echo "pulldata       Run pg_restore -U postgres -d postgres latest.dump in the db container"
+	@echo "pullmedia      Pull the media from the S3 bucket"
+	@echo "restart        Restart the containers"
+	@echo "restoredb      Restore the database from a backup"
+	@echo "sh             Execute a command in a running container"
+	@echo "superuser      Create a superuser"
+	@echo "test           Run tests"
 	@echo ""
-	@echo "Miscellaneous"
-	@echo " quickstart     Build, start, and run the containers (npm & docker)"
-	@echo " requirements   Export requirements.txt (uv)"
-	@echo " clean          Clean up generated files and folders (node_modules, static, media, etc.)"
-	@echo " frontend       Build the frontend (npm)"
-	@echo " start          Build the front end and start local development server (npm)"
+	@echo "Miscellaneous targets"
+	@echo "====================="
+	@echo "clean          Clean up generated files and folders (node_modules, static, media, etc.)"
+	@echo "frontend       Build the frontend (npm)"
+	@echo "quickstart     Build and start all (npm & docker)"
+	@echo "requirements   Export requirements.txt (uv)"
+	@echo "start          Build the front end and start local development server (npm)"
 	@echo ""
 
 # Build the containers
@@ -60,7 +68,7 @@ sh:
 # Run the Django development server
 .PHONY: run
 run:
-	$(DC) exec app python manage.py runserver 0.0.0.0:8000
+	$(DC) exec $(DC_APP) $(MANAGE) runserver 0.0.0.0:8000
 
 # Stop and remove the Docker containers, networks, and volumes
 .PHONY: destroy
@@ -70,26 +78,26 @@ destroy:
 # Run migrations
 .PHONY: migrate
 migrate:
-	$(DC) exec app python manage.py migrate
+	$(DC) exec $(DC_APP) $(MANAGE) migrate
 
 # Create a superuser
 .PHONY: superuser
 superuser:
-	$(DC) exec app python manage.py createsuperuser
+	$(DC) exec $(DC_APP) $(MANAGE) createsuperuser
 
 # Collect static files
 .PHONY: collectstatic
 collectstatic:
-	$(DC) exec app python manage.py collectstatic --noinput
+	$(DC) exec $(DC_APP) $(MANAGE) collectstatic --noinput
 
 # Run tests, you will need to have run `make collectstatic` first
 .PHONY: test
 test:
-	$(DC) exec app python manage.py test
+	$(DC) exec $(DC_APP) $(MANAGE) test
 
-# Quickstart
+# Quickstart blank project
 .PHONY: quickstart
-quickstart: frontend build up migrate collectstatic test run
+quickstart: frontend build up migrate collectstatic superuser
 
 # Build the fontend
 .PHONY: frontend
@@ -119,48 +127,28 @@ clean:
 	echo; \
 	if [[ $$REPLY =~ ^[Yy]$$ ]]; then \
 		make destroy; \
-		rm -rf ./node_modules ./static ./media db.sqlite3; \
+		rm -rf ./node_modules ./static ./media ./dbbackups db.sqlite3; \
 		echo "Cleaned up"; \
 	else \
 		echo "Aborted"; \
 	fi
 
-# TEMPORARY COMMANDS
-.PHONY: dumpdata
-dumpdata:
-	mkdir -p fixtures/core
-	$(DC) exec app python manage.py dumpdata core.Navigation --indent 2 > fixtures/core/data.json
-	mkdir -p fixtures/home
-	$(DC) exec app python manage.py dumpdata home.HomePage --indent 2 > fixtures/home/data.json
-	mkdir -p fixtures/pages
-	$(DC) exec app python manage.py dumpdata pages.ArticleIndexPage \
-		pages.ArticlePage \
-		pages.ArticleChapterPage \
-		pages.PackageIndexPage \
-		pages.PackagePage \
-		--indent 2 > fixtures/pages/data.json
-	mkdir -p fixtures/users
-	$(DC) exec app python manage.py dumpdata auth.User --indent 2 > fixtures/users/data.json
-	mkdir -p fixtures/wagtailcore
-	$(DC) exec app python manage.py dumpdata \
-		wagtailcore.site \
-		wagtailcore.page \
-		wagtailcore.revision --indent 2 > fixtures/wagtailcore/data.json
-	mkdir -p fixtures/wagtailimages
-	$(DC) exec app python manage.py dumpdata \
-		wagtailimages.image --indent 2 > fixtures/wagtailimages/data.json
+# Pull the data using the Heroku CLI and import it into the local database
+.PHONY: pulldata
+pulldata:
+	mkdir -p dbbackups
+	heroku pg:backups:download -a $(HEROKU_APP_NAME)
+	mv latest.dump dbbackups/latest.dump
+	$(DC) exec db sh -c 'psql -U postgres -d postgres -c "DROP DATABASE IF EXISTS webapp;"'
+	$(DC) exec db sh -c 'psql -U postgres -d postgres -c "CREATE DATABASE webapp;"'
+	$(DC) exec db sh -c 'pg_restore -U postgres -d webapp /backups/latest.dump'
 
-.PHONY: loaddata
-loaddata:
-	$(DC) exec app python manage.py loaddata fixtures/**/*.json
-
-.PHONY: copyimages
-copyimages:
+# Pull the media from the S3 bucket
+.PHONY: pullmedia
+pullmedia:
 	mkdir -p media/original_images
-	cp -R ../nickmoreton.co.uk-saves/mediabackups/original_images/* media/original_images
-
-
-.PHONY: backupdb
-backupdb:
-	$(DC) exec db sh -c 'pg_dump -Fp --no-acl --no-owner postgresql://postgres:password@db:5432/webapp' \
-	> ../nickmoreton.co.uk-saves/psqlbackups/nickmoreton.dump
+	$(eval AWS_ACCESS_KEY_ID=$(shell heroku config:get AWS_ACCESS_KEY_ID -a $(HEROKU_APP_NAME)))
+	$(eval AWS_SECRET_ACCESS_KEY=$(shell heroku config:get AWS_SECRET_ACCESS_KEY -a $(HEROKU_APP_NAME)))
+	$(eval AWS_STORAGE_BUCKET_NAME=$(shell heroku config:get AWS_STORAGE_BUCKET_NAME -a $(HEROKU_APP_NAME)))
+	s3cmd --access_key=$(AWS_ACCESS_KEY_ID) --secret_key=$(AWS_SECRET_ACCESS_KEY) sync s3://$(AWS_STORAGE_BUCKET_NAME)/original_images media
+	$(DC) exec $(DC_APP) $(MANAGE) shell -c "from wagtail.images.models import Rendition; Rendition.objects.all().delete()"
