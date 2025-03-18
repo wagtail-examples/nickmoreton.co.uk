@@ -1,0 +1,55 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: development
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    links:
+      - db:db
+    environment:
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1
+      DJANGO_SECRET_KEY: app-secret_key
+      DATABASE_URL: postgresql://postgres:password@db:5432/webapp
+      WAGTAIL_SITE_NAME: nickmoreton
+      WAGTAILADMIN_BASE_URL: http://localhost:8000
+      ENVIRONMENT: development
+      PYTHONUNBUFFERED: 1
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: webapp
+      POSTGRES_PASSWORD: password
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+      # Mount the local directory ./dbbackups to /backups in the container
+      # so that the backups can be imported/exported
+      - ./dbbackups:/backups:rw
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 20s
+      retries: 5
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+
+  mailhog:
+    image: mailhog/mailhog
+    platform: linux/amd64
+    logging:
+      driver: 'none'  # disable saving logs
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui
+
+volumes:
+  dbdata:
