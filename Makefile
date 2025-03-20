@@ -182,15 +182,7 @@ define heroku_to_env
     @echo "Heroku config vars copied to .env for app: $(APP_NAME)"
 endef
 
-# # Function to get a value from .env file
-# define get_env_var
-#     $(shell grep "^$(1)=" .env | cut -d '=' -f 2)
-# endef
-
-# # Function to create the .s3fg file
-# define create_s3cfg
-# 	@touch .s3cfg
-# 	@echo "[default]" >> .s3cfg
-# 	@echo "access_key = $(1)" >> .s3cfg
-# 	@echo "secret_key = $(2)" >> .s3cfg
-# endef
+.PHONY: stage-build
+stage-build:
+	@$(DC) -f docker-compose.yaml -f docker-compose-stage.yaml build
+	@$(DC) -f docker-compose.yaml -f docker-compose-stage.yaml up -d
