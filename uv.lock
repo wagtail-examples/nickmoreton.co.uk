@@ -492,16 +492,6 @@ wheels = [
 ]
 
 [[package]]
-name = "mysqlclient"
-version = "2.2.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/de/9c/b176826e8994551ce826404dab97e305a4bb76c8b0a4e016fabda2901c71/mysqlclient-2.2.0.tar.gz", hash = "sha256:04368445f9c487d8abb7a878e3d23e923e6072c04a6c320f9e0dc8a82efba14e", size = 89543 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/20/f1/af81742264efd8e37c609a30f8aa72629bf039dd286e2b7f65ece68a96bf/mysqlclient-2.2.0-cp310-cp310-win_amd64.whl", hash = "sha256:68837b6bb23170acffb43ae411e47533a560b6360c06dac39aa55700972c93b2", size = 199950 },
-    { url = "https://files.pythonhosted.org/packages/6d/48/571d99aa4634719c92d516c7bada1091ab85cebbd02fcf83f34b19f04c87/mysqlclient-2.2.0-cp311-cp311-win_amd64.whl", hash = "sha256:5670679ff1be1cc3fef0fa81bf39f0cd70605ba121141050f02743eb878ac114", size = 199951 },
-]
-
-[[package]]
 name = "nickmoreton"
 version = "0.1.0"
 source = { virtual = "." }
@@ -510,7 +500,6 @@ dependencies = [
     { name = "django" },
     { name = "django-storages", extra = ["s3"] },
     { name = "gunicorn" },
-    { name = "mysqlclient" },
     { name = "psycopg2" },
     { name = "requests" },
     { name = "wagtail" },
@@ -531,7 +520,6 @@ requires-dist = [
     { name = "django", specifier = ">=4.2,<4.3" },
     { name = "django-storages", extras = ["s3"], specifier = ">=1.14.5" },
     { name = "gunicorn", specifier = ">=23.0.0" },
-    { name = "mysqlclient", specifier = "==2.2.0" },
     { name = "psycopg2", specifier = ">=2.9.10" },
     { name = "requests", specifier = "==2.32.2" },
     { name = "wagtail", specifier = ">=6.4,<6.5" },

@@ -17,3 +17,4 @@ repos:
     hooks:
       - id: uv-lock # Locks the uv lockfile
       - id: uv-export # Exports the uv lockfile to requirements.txt
+        args: [--no-hashes, --no-dev, --output-file, requirements.txt, --locked]
