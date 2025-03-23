@@ -11,3 +11,9 @@ repos:
     rev: 7.1.2
     hooks:
       - id: flake8
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    # Keep version in sync with your uv package version
+    rev: 0.6.9
+    hooks:
+      - id: uv-lock # Locks the uv lockfile
+      - id: uv-export # Exports the uv lockfile to requirements.txt

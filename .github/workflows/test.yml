@@ -23,7 +23,8 @@ jobs:
         uses: astral-sh/setup-uv@v5
         with:
           # Install a specific version of uv.
-          version: "0.6.6"
+          # Keep this in sync with the version in .pre-commit-config.yaml
+          version: "0.6.9"
 
       - name: "Set up Python"
         uses: actions/setup-python@v5
@@ -32,6 +33,14 @@ jobs:
 
       - name: Install the project
         run: uv sync --all-extras --dev
+
+      - name: Check if uv.lock is up to date
+        run: |
+          uv lock
+          if ! git diff --exit-code uv.lock; then
+            echo "uv.lock is not up to date. Please update it."
+            exit 1
+          fi
 
       - name: Check if requirements.txt is up to date
         run: |
@@ -52,29 +61,3 @@ jobs:
 
       - name: Run tests
         run: uv run manage.py test
-
-  node:
-    name: node
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 22 # Ensure this is the same as the version in .nvmrc
-
-      - name: Install the project
-        run: npm ci
-
-      # this isn't very robust but eventually the build step swill
-      # happen at build time so the static_compiled directory will
-      # not exist in the repository
-      - name: Check static files have been built
-        run: |
-          npm run build
-          if ! git diff --exit-code webapp/static_compiled/css/bundle.css; then
-            echo "static_compiled is not up to date. Please update it."
-            exit 1
-          fi
