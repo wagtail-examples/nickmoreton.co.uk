@@ -54,6 +54,12 @@ make migrate
 make runserver
 ```
 
+Then you can run the following command to start the development environment:
+
+```bash
+make run
+```
+
 View the site at <http://localhost:8000> (frontend files may be missing, see below)
 
 Create a superuser
@@ -63,6 +69,8 @@ make superuser
 ```
 
 View the admin at <http://localhost:8000/admin>
+
+Django-browser-reload will automatically reload the page in the browser when files are changed, see below for reloading the frontend and seeing the changes in the browser.
 
 ## Developer setup (frontend)
 
@@ -81,11 +89,13 @@ npm run build
 
 ### Build & watch the frontend
 
-The wagtail app should be running in the background. The frontend will be served on <http://localhost:3000>
+The wagtail app should be running in the background. 
 
 ```bash
 npm start
 ```
+
+Django-browser-reload will automatically reload the page in the browser when the frontend files are updated.
 
 ## Import data and media (from production)
 

@@ -10,6 +10,7 @@ charset-normalizer==3.4.1
 defusedxml==0.7.1
 dj-database-url==2.3.0
 django==5.1.7
+django-browser-reload==1.18.0
 django-filter==25.1
 django-modelcluster==6.4
 django-permissionedforms==0.1
