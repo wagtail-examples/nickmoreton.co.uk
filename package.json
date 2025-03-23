@@ -14,13 +14,11 @@
     "scripts:watch": "concurrently \"npm run scripts -- --watch\"",
     "images": "node scripts/images.js",
     "clean": "rm -rf static_compiled",
-    "server": "node scripts/server.js",
     "build": "concurrently \"npm run styles:prod\" \"npm run scripts:prod\" \"npm run images\"",
-    "start": "concurrently \"npm run clean\" \"npm run styles:watch\" \"npm run scripts:watch\" \"npm run images\" \"npm run server\""
+    "start": "concurrently \"npm run clean\" \"npm run styles:watch\" \"npm run scripts:watch\" \"npm run images\""
   },
   "devDependencies": {
     "@picocss/pico": "^2.0.6",
-    "browser-sync": "^3.0.3",
     "concurrently": "^9.1.2",
     "esbuild": "^0.25.0",
     "highlight.js": "^11.11.1",

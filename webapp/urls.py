@@ -14,6 +14,7 @@ urlpatterns = [
     path("documents/", include(wagtaildocs_urls)),
     path("search/", search_views.search, name="search"),
     path("kitchen-sink/", KitchenSinkView.as_view(), name="kitchen_sink"),
+    path("__reload__/", include("django_browser_reload.urls")),
 ]
 
 
