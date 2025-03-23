@@ -142,6 +142,8 @@ clean:
 # Pull the data using the Heroku CLI and import it into the local database
 .PHONY: pull-data
 pull-data:
+	@if [ -z "$(HEROKU_APP_NAME)" ]; then echo "HEROKU_APP_NAME is not set"; exit 1; fi
+	@echo "Pulling data from Heroku database"
 	@mkdir -p dbbackups
 	@heroku pg:backups:download -a $(HEROKU_APP_NAME)
 	@mv latest.dump dbbackups/latest.dump
@@ -149,15 +151,22 @@ pull-data:
 	@$(DC) exec db sh -c 'psql -U postgres -d postgres -c "CREATE DATABASE webapp;"'
 	-@$(DC) exec db sh -c 'pg_restore -U postgres -d webapp /backups/latest.dump || true'
 	@rm -rf dbbackups/latest.dump
+	@echo "Data pulled from Heroku database"
 
 # Pull the media from the S3 bucket
 # Not sure why but if you have .s3cfg in your home directory it will use that for the s3cmd command keys etc.
 # So you need to remove it at the moment
 .PHONY: pull-media
 pull-media:
-	@echo "Pulling media from S3 bucket"
-	@mkdir -p media/original_images
+	@if [ -z "$(HEROKU_APP_NAME)" ]; then echo "HEROKU_APP_NAME is not set"; exit 1; fi
 	@$(eval S3CFG=$(PWD)/.s3cfg)
+	@sleep 1 # allow time for the .s3cfg file to be created
+	$(call heroku_to_env,$(HEROKU_APP_NAME))
+	@echo "Pulling media from S3 bucket"
+	@rm -rf media
+	@mkdir -p media/original_images
+	@touch .s3cfg
+	@echo "[default]" >> .s3cfg
 	@s3cmd --config=$(PWD)/.s3cfg --access_key=$(AWS_ACCESS_KEY_ID) --secret_key=$(AWS_SECRET_ACCESS_KEY) sync s3://$(AWS_STORAGE_BUCKET_NAME)/original_images media
 	@$(DC) exec $(DC_APP) $(MANAGE) shell -c "from wagtail.images.models import Rendition; Rendition.objects.all().delete()"
 	@echo "Media pulled from S3 bucket"
@@ -168,6 +177,7 @@ pull-media:
 # update the HEROKU_APP_NAME in the .env file before running
 .PHONY: extract-vars
 extract-vars:
+	@if [ -z "$(HEROKU_APP_NAME)" ]; then echo "HEROKU_APP_NAME is not set"; exit 1; fi
 	$(call heroku_to_env,$(HEROKU_APP_NAME))
 
 # Function to copy Heroku config vars to .env
@@ -181,16 +191,3 @@ define heroku_to_env
     done
     @echo "Heroku config vars copied to .env for app: $(APP_NAME)"
 endef
-
-# # Function to get a value from .env file
-# define get_env_var
-#     $(shell grep "^$(1)=" .env | cut -d '=' -f 2)
-# endef
-
-# # Function to create the .s3fg file
-# define create_s3cfg
-# 	@touch .s3cfg
-# 	@echo "[default]" >> .s3cfg
-# 	@echo "access_key = $(1)" >> .s3cfg
-# 	@echo "secret_key = $(2)" >> .s3cfg
-# endef

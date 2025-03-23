@@ -54,7 +54,7 @@ make migrate
 make runserver
 ```
 
-View the site at <http://localhost:8000>
+View the site at <http://localhost:8000> (frontend files may be missing, see below)
 
 Create a superuser
 
@@ -73,18 +73,18 @@ nvm use
 npm install
 ```
 
+### Build the frontend
+
+```bash
+npm run build
+```
+
 ### Build & watch the frontend
 
 The wagtail app should be running in the background. The frontend will be served on <http://localhost:3000>
 
 ```bash
 npm start
-```
-
-### Build the frontend
-
-```bash
-npm run build
 ```
 
 ## Import data and media (from production)

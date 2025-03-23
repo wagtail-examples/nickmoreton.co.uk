@@ -170,3 +170,4 @@ webapp/static_compiled/
 /dbbackups
 /fixtures
 /mediabackups
+/.s3cfg
