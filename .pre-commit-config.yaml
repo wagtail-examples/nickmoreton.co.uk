@@ -22,4 +22,4 @@ repos:
     rev: "1.23.1"  # replace with latest tag on GitHub
     hooks:
     -   id: django-upgrade
-        args: [--target-version, "5.0"]   # Replace with Django version
+        args: [--target-version, "5.1"]   # Replace with Django version
