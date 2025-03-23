@@ -12,7 +12,7 @@ RUN npm run build
 
 
 # BASE
-FROM python:3.10-bookworm AS base
+FROM python:3.13-bookworm AS base
 
 RUN useradd wagtail
 
