@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile
-      target: development
+    command: tail -f /dev/null
     volumes:
       - .:/app
     ports:

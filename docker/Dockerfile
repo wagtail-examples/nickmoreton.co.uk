@@ -1,17 +1,5 @@
 # Currently used for development only
 # Heroku deployments are via buildpacks
-# STATIC
-FROM node:22 AS static
-
-COPY package.json package-lock.json ./
-RUN npm install
-
-COPY ./webapp/static_src/ ./webapp/static_src/
-COPY ./scripts/ ./scripts/
-RUN npm run build
-
-
-# BASE
 FROM python:3.13-bookworm AS base
 
 RUN useradd wagtail
@@ -22,7 +10,6 @@ ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PORT=8000
 
-# Install system packages required by Wagtail and Django.
 RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
     build-essential \
     libpq-dev \
@@ -31,32 +18,20 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
     libwebp-dev \
  && rm -rf /var/lib/apt/lists/*
 
-# Install the application server.
-# RUN pip install "gunicorn==20.0.4"
-
-# Install the project requirements.
+# Requirements.
 COPY requirements.txt /
 RUN pip install -U pip && pip install -r /requirements.txt
 
-# Use /app folder as a directory where the source code is stored.
 WORKDIR /app
 
-COPY --from=static ./webapp/static_compiled ./webapp/static_compiled
-
-# Set this directory to be owned by the "wagtail" user. This Wagtail project
-# uses SQLite, the folder needs to be owned by the user that
-# will be writing to the database file.
 RUN chown wagtail:wagtail /app
 
-# Copy the source code of the project into the container.
 COPY --chown=wagtail:wagtail . .
 
-# Use user "wagtail" to run the build commands below and the server itself.
 USER wagtail
 
-# Collect static files.
-RUN python manage.py collectstatic --noinput --clear
+# RUN python manage.py collectstatic --noinput --clear
 
-FROM base AS development
+# FROM base AS development
 
-CMD tail -f /dev/null
+# CMD tail -f /dev/null
