@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile
-    command: tail -f /dev/null
+    command: tail -f /dev/null # Prevent the container from exiting
     volumes:
       - .:/app
     ports:
