@@ -41,10 +41,15 @@ help:
 	@echo "The commands below require the Heroku CLI and s3cmd to be installed"
 	@echo "you can run the 'extract-vars' target to copy the Heroku config vars to .env"
 	@echo "----------------------------------------------------------------------------"
-	@echo "extract-vars           Copy Heroku config vars to .env"
-	@echo "               update the HEROKU_APP_NAME in the .env file before running"
-	@echo "pull-data       Pull the data from the Heroku database and import it into the local database"
-	@echo "pull-media      Pull the media from the S3 bucket"
+	@echo "extract-vars   Copy Heroku config vars to .env"
+	@echo "                 update the HEROKU_APP_NAME in the .env file before running"
+	@echo "pull-data      Pull the data from the Heroku database and import it into the local database"
+	@echo "pull-media     Pull the media from the S3 bucket"
+	@echo ""
+	@echo "Run with local Dokku machine"
+	@echo "============================================================================"
+	@echo "machine        Build & start the local Dokku machine"
+	@echo "dokku          Install Dokku on the local machine abd setup the app"
 
 # Build the containers
 .PHONY: build
@@ -191,3 +196,17 @@ define heroku_to_env
     done
     @echo "Heroku config vars copied to .env for app: $(APP_NAME)"
 endef
+
+# Build and start the local Dokku machine
+.PHONY: machine
+machine:
+	@echo "Building the local Dokku machine"
+	@orb create -a amd64 debian:bookworm $(DOKKU_APP_NAME)
+	@echo "Build complete now run make install-dokku to install Dokku"
+
+
+# Install Dooku
+.PHONY: dokku
+dokku:
+	@echo "Installing Dokku"
+	@orb -u root -m $(DOKKU_APP_NAME) ./dokku/setup-dokku.sh
