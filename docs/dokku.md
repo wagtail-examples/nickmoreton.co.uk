@@ -101,6 +101,7 @@ dokku ports:add or set nickmoreton-staging https:80:8000
 ```
 
 ## Add an nginx config file for the apps media files
+
 ```bash
 mkdir -p /home/dokku/nickmoreton-staging/nginx.conf.d
 ```
@@ -117,4 +118,18 @@ Run the following command to set the nginx config
 ```bash
 dokku ps:restart nickmoreton-staging
 service nginx reload
+```
+
+Adjust the nginx config for uploads:
+
+```bash
+dokku nginx:set nickmoreton-staging client-max-body-size 10m
+dokku proxy:build-config nickmoreton-staging # for settings to take effect
+```
+## Set up the letsencrypt certificate
+
+```bash
+dokku letsencrypt:enable nickmoreton-staging
+dokku letsencrypt:cron-job --add
+dokku letsencrypt:list # to check the status
 ```
