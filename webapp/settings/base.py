@@ -31,6 +31,11 @@ if "DJANGO_SECRET_KEY" in env_vars:
 if "DJANGO_ALLOWED_HOSTS" in env_vars:
     ALLOWED_HOSTS = env_vars["DJANGO_ALLOWED_HOSTS"].split(",")
 
+if "DJANGO_CSRF_TRUSTED_ORIGINS" in env_vars:
+    CSRF_TRUSTED_ORIGINS = env_vars["DJANGO_CSRF_TRUSTED_ORIGINS"].split(",")
+else:
+    CSRF_TRUSTED_ORIGINS = []
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 

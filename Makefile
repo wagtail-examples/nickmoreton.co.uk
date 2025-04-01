@@ -41,10 +41,11 @@ help:
 	@echo "The commands below require the Heroku CLI and s3cmd to be installed"
 	@echo "you can run the 'extract-vars' target to copy the Heroku config vars to .env"
 	@echo "----------------------------------------------------------------------------"
-	@echo "extract-vars           Copy Heroku config vars to .env"
-	@echo "               update the HEROKU_APP_NAME in the .env file before running"
-	@echo "pull-data       Pull the data from the Heroku database and import it into the local database"
-	@echo "pull-media      Pull the media from the S3 bucket"
+	@echo "extract-vars   Copy Heroku config vars to .env"
+	@echo "                 update the HEROKU_APP_NAME in the .env file before running"
+	@echo "pull-data      Pull the data from the Heroku database and import it into the local database"
+	@echo "pull-media     Pull the media from the S3 bucket"
+	@echo ""
 
 # Build the containers
 .PHONY: build
