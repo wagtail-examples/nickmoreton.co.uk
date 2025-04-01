@@ -171,3 +171,4 @@ webapp/static_compiled/
 /fixtures
 /mediabackups
 /.s3cfg
+/bootstrap.sh
