@@ -69,8 +69,10 @@ dokku config:set nickmoreton-staging DJANGO_CSRF_TRUSTED_ORIGINS=https://the-dom
 
 ## Ensure the app storage directory exists
 ```bash
-# The permissions are set to dokku:dokku
-dokku storage:ensure-directory nickmoreton-staging --chown heroku
+# The permissions are set to 32767:32767
+dokku storage:ensure-directory nickmoreton-staging --chown herokuish
+# Sometimes the above command fails, so run this to ensure the directory exists
+# and is owned by the correct user
 
 # Mount the apps storage directory
 dokku storage:mount nickmoreton-staging /var/lib/dokku/data/storage/nickmoreton-staging/media:/app/media
