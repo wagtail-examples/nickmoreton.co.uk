@@ -161,7 +161,7 @@ pull-data:
 pull-media:
 	@if [ -z "$(HEROKU_APP_NAME)" ]; then echo "HEROKU_APP_NAME is not set"; exit 1; fi
 	@$(eval S3CFG=$(PWD)/.s3cfg)
-	@sleep 1 # allow time for the .s3cfg file to be created
+	@sleep 2 # allow time for the .s3cfg file to be created
 	$(call heroku_to_env,$(HEROKU_APP_NAME))
 	@echo "Pulling media from S3 bucket"
 	@rm -rf media
@@ -187,6 +187,7 @@ define heroku_to_env
     $(eval APP_NAME=$(1))
     @> .env
     @echo "HEROKU_APP_NAME=$(APP_NAME)" >> .env
+	@echo "DOKKU_APP_NAME=$(APP_NAME)-staging" >> .env
     @for var in $(HEROKU_VARS); do \
         echo "$$var" >> .env; \
     done
