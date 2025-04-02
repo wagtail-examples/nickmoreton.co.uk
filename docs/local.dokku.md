@@ -1,28 +1,15 @@
-# Run Dokku on OrbStack
+# Local Development with Dokku on OrbStack 🛠️
 
-This will set up dokku on a debian machine using orbstack.
+This guide helps you create a production-like environment locally using OrbStack and Dokku.
 
-Use it as a local development environment or for testing, not in DEBUG mode. It's trying to be as close to a heroku environment as possible.
+⚠️ **Note**: This is for development/testing purposes, not permanent deployment. For production, see our [Linode deployment guide](./linode.dokku.md).
 
-The key objectives are:
-- Use the same buildpacks as heroku (not deploying using Dockerfile)
-- Use a storage system locally and not requiring s3 (not really like Heoku though)
-- Use a postgres database
-- Use a local domain name with https (not using a port)
-- Use git push to deploy
-
----
-- [Create a new machine](#create-a-machine) with the name `dokku-machine` and the domain name `dokku-machine.orb.local`.
-- [Intall Dokku](#install-dokku) on the machine.
-- [Configure the global domain](#configure-global-domain) to match the machine domain name.
-- [SSH key](#ssh-key) to access the machine.
-- [Install Postgres](#install-postgres) on the machine.
-- [Create a new app](#create-a-new-app) on the machine.
-- [Deploying to Dokku](#deploying-to-dokku) using git.
-- [Accessing the app](#accessing-the-app) using the domain name.
-- [Troubleshooting](#troubleshooting)
-- - [Images and documents cannot be uploaded](#images-and-documents-cannot-be-uploaded) if you have issues with uploading images or documents.
-
+## Key Features
+- 🔄 Heroku-compatible buildpacks
+- 💾 Local storage system
+- 🗄️ PostgreSQL database
+- 🔒 HTTPS with local domain
+- 🚀 Git-push deployments
 
 ## Prerequisites
 - [OrbStack](https://orbstack.dev/) installed
@@ -37,7 +24,7 @@ orbctl run -m dokku-machine -u root bash -c "apt install wget htop -y"
 
 ### Install Dokku
 
-You could run the commands inside the machine console, logged in as root. That should translate to running the same commands below but moitting `orbctl run -m dokku-machine -u root bash -c`.
+You could run the commands inside the machine console, logged in as root. That should translate to running the same commands below but omitting `orbctl run -m dokku-machine -u root bash -c`.
 
 ```bash
 # Make sure the latest version is used
@@ -46,16 +33,12 @@ orbctl run -m dokku-machine -u root bash -c "wget -NP . https://dokku.com/instal
 
 ### Configure Global Domain
 
-This should match the machine Domain name in orbstack.
-
-```bash
-### Configure Domain
+This should match the machine Domain name in OrbStack.
 
 ```bash
 orbctl run -m dokku-machine -u root bash -c "dokku domains:set-global dokku-machine.orb.local"
 # -----> Set dokku-machine.orb.local
 ```
-
 
 ### SSH Key
 
@@ -86,7 +69,7 @@ orbctl run -m dokku-machine -u root bash -c "dokku postgres:link myapp-db myapp"
 # -----> Restarting app myapp
 # !     App image (dokku/myapp:latest) not found
 
-# Domians might need checking here and corrccted at the end
+# Domains might need checking here and corrected at the end
 orbctl run -m dokku-machine -u root bash -c "dokku domains:report myapp"
 # =====> myapp domains information
 # ...
@@ -105,7 +88,7 @@ orbctl run -m dokku-machine -u root bash -c "dokku storage:ensure-directory myap
 # -----> Ensuring /var/lib/dokku/data/storage/myapp exists
 
 orbctl run -m dokku-machine -u root bash -c "dokku storage:mount myapp /var/lib/dokku/data/storage/myapp/media:/app/media"
-# No feeback seen here optionally check with
+# No feedback seen here optionally check with
 orbctl run -m dokku-machine -u root bash -c "dokku storage:report myapp"
 
 orbctl run -m dokku-machine -u root bash -c "mkdir -p /home/dokku/myapp/nginx.conf.d"
@@ -114,7 +97,7 @@ location /media {
     alias /var/lib/dokku/data/storage/myapp/media;
 }
 EOF"
-# No feedback seen here optoanlly check with
+# No feedback seen here optionally check with
 orbctl run -m dokku-machine -u root bash -c "ls /home/dokku/myapp/nginx.conf.d"
 # media.conf
 orbctl run -m dokku-machine -u root bash -c "cat /home/dokku/myapp/nginx.conf.d/media.conf"
@@ -128,10 +111,10 @@ orbctl run -m dokku-machine -u root bash -c "dokku nginx:set myapp client-max-bo
 
 # Make any other corrections here
 
-# Restart the app for all setting to take effect
-# But this may not have any effect untill the app is deployed
+# Restart the app for all settings to take effect
+# But this may not have any effect until the app is deployed
 orbctl run -m dokku-machine -u root bash -c "dokku ps:restart myapp"
-# After the app is deployed the restart wlll happen automatically
+# After the app is deployed the restart will happen automatically
 ```
 
 ## Deploying to Dokku
@@ -143,7 +126,7 @@ From the root of the project:
 git remote add dokku dokku@dokku-machine@orb:myapp
 git remote -v # to check (optional)
 
-# On the first deployemnt the app should be restarted so will capture any of the above changes
+# On the first deployment the app should be restarted so will capture any of the above changes
 git push dokku main
 # =====> Application deployed:
 #        http://myapp.dokku-machine.orb.local
@@ -165,7 +148,7 @@ You should be able to access the app at `https://myapp.dokku-machine.orb.local` 
 
 ### Images and documents cannot be uploaded
 
-This is likely due to the persmissions of the storage directory. You can check the permissions with:
+This is likely due to the permissions of the storage directory. You can check the permissions with:
 
 ```bash
 orbctl run -m dokku-machine -u root bash -c "ls -l /var/lib/dokku/data/storage/myapp"
@@ -184,12 +167,13 @@ orbctl run -m dokku-machine -u root bash -c "ls -l /var/lib/dokku/data/storage/m
 
 And try uploading again.
 
-## Bonus
+## Quick Setup Script 🚀
 
-Thats a lot of commands to run. You can run the following script to do it all for you. 
+Save time with our automated setup script:
 
-[dokku-setup.sh](./files/dokku-setup.sh) Just make sure to change the `ssh-key` variables.
+[dokku-setup.sh](./docs/files/dokku-setup.sh) Don't forget to modify the SSH key in the script before running it.
 
 ```bash
-# Run it with
+# Ensure to modify ssh-key in the script first
 bash ./docs/files/dokku-setup.sh
+```

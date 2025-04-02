@@ -1,6 +1,16 @@
-# A Wagtail CMS
+# Nick Moreton's Wagtail-Powered Website 🚀
 
-This is the source code for my website, [www.nickmoreton.co.uk](https://www.nickmoreton.co.uk)
+[![Wagtail](https://img.shields.io/badge/wagtail-6.4-olive.svg)](https://wagtail.org/)
+[![Django](https://img.shields.io/badge/django-5.1-green.svg)](https://www.djangoproject.com/)
+[![Python](https://img.shields.io/badge/python-3.13-blue.svg)](https://www.python.org/)
+
+Welcome to the source code of [www.nickmoreton.co.uk](https://www.nickmoreton.co.uk) - a modern, Django-based website showcasing:
+- ⚡ Lightning-fast performance with Wagtail CMS
+- 🎨 Modern frontend architecture
+- 🚀 Production-ready deployment options
+- 📱 Responsive design throughout
+
+> Special thanks to [Torchbox](https://torchbox.com) for providing my production hosting on the Heroku platform. 🙏
 
 ## Setup for development
 
@@ -116,3 +126,19 @@ make pull-data
 ```bash
 make pull-media
 ```
+
+## Deployment Options 🌍
+
+### Local Production-like Environment
+Test your site in a production-like setup using:
+- [OrbStack](https://orbstack.dev/) for containerization
+- [Dokku](https://dokku.com) for PaaS functionality
+➡️ [Local Dokku Setup Guide](./docs/local.dokku.md)
+
+### Production Deployment
+> Did I mention the company I work for, [Torchbox](https://torchbox.com), provide the production hosting for my website on the Heroku platform. 🙏
+
+Deploy to actual production using:
+- [Linode](https://www.linode.com/) (Akamai Cloud) for hosting
+- [Dokku](https://dokku.com/) for deployment management
+➡️ [Production Setup Guide](./docs/linode.dokku.md)
