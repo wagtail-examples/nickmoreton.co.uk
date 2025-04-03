@@ -134,7 +134,7 @@ clean:
 	echo; \
 	if [[ $$REPLY =~ ^[Yy]$$ ]]; then \
 		make destroy; \
-		rm -rf ./node_modules ./static ./media ./dbbackups db.sqlite3 webapp/static_compiled .s3cfg; \
+		rm -rf ./node_modules ./static ./media ./db_backups db.sqlite3 webapp/static_compiled .s3cfg; \
 		echo "Cleaned up"; \
 	else \
 		echo "Aborted"; \
