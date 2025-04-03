@@ -145,13 +145,13 @@ clean:
 pull-data:
 	@if [ -z "$(HEROKU_APP_NAME)" ]; then echo "HEROKU_APP_NAME is not set"; exit 1; fi
 	@echo "Pulling data from Heroku database"
-	@mkdir -p dbbackups
+	@mkdir -p db_backups
 	@heroku pg:backups:download -a $(HEROKU_APP_NAME)
-	@mv latest.dump dbbackups/latest.dump
+	@mv latest.dump db_backups/latest.dump
 	@$(DC) exec db sh -c 'psql -U postgres -d postgres -c "DROP DATABASE IF EXISTS webapp;"'
 	@$(DC) exec db sh -c 'psql -U postgres -d postgres -c "CREATE DATABASE webapp;"'
-	-@$(DC) exec db sh -c 'pg_restore -U postgres -d webapp /backups/latest.dump || true'
-	@rm -rf dbbackups/latest.dump
+	-@$(DC) exec db sh -c 'pg_restore -U postgres -d webapp /db_backups/latest.dump || true'
+	@rm -rf db_backups/latest.dump
 	@echo "Data pulled from Heroku database"
 
 # Pull the media from the S3 bucket

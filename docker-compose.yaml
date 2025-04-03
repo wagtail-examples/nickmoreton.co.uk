@@ -31,7 +31,7 @@ services:
       - dbdata:/var/lib/postgresql/data
       # Mount the local directory ./dbbackups to /backups in the container
       # so that the backups can be imported/exported
-      - ./dbbackups:/backups:rw
+      - ./db_backups:/db_backups:rw
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 5s
