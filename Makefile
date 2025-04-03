@@ -159,7 +159,14 @@ pull-data:
 export-data:
 	echo "Exporting data from the postgres database"
 	@mkdir -p db_backups
-	@$(DC) exec db sh -c 'pg_dump -U postgres -d webapp > /db_backups/backup.dump'
+	@$(DC) exec db sh -c 'pg_dump -Fc -U postgres -d webapp > /db_backups/backup.dump'
+
+# Import the data from the file into the postgres database
+.PHONY: import-data
+import-data:
+	echo "Importing data into the postgres database"
+	orbctl push -m dokku-machine db_backups/backup.dump /root/backup.dump
+	orbctl exec -m dokku-machine bash -c 'dokku postgres:import myapp-db < /root/backup.dump'
 	
 # Pull the media from the S3 bucket
 # Not sure why but if you have .s3cfg in your home directory it will use that for the s3cmd command keys etc.
