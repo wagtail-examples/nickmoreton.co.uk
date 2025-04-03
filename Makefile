@@ -154,6 +154,13 @@ pull-data:
 	@rm -rf db_backups/latest.dump
 	@echo "Data pulled from Heroku database"
 
+# Export the data from the postgres database to a file
+.PHONY: export-data
+export-data:
+	echo "Exporting data from the postgres database"
+	@mkdir -p db_backups
+	@$(DC) exec db sh -c 'pg_dump -U postgres -d webapp > /db_backups/backup.dump'
+	
 # Pull the media from the S3 bucket
 # Not sure why but if you have .s3cfg in your home directory it will use that for the s3cmd command keys etc.
 # So you need to remove it at the moment
