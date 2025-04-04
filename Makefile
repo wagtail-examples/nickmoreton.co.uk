@@ -164,10 +164,10 @@ export-data:
 # Import the data from the file into the postgres database
 .PHONY: import-data
 import-data:
-	echo "Importing data into the postgres database"
+	echo "Importing data into the dokku postgres database"
 	orbctl push -m dokku-machine db_backups/backup.dump /root/backup.dump
 	orbctl exec -m dokku-machine bash -c 'dokku postgres:import myapp-db < /root/backup.dump'
-	
+
 # Pull the media from the S3 bucket
 # Not sure why but if you have .s3cfg in your home directory it will use that for the s3cmd command keys etc.
 # So you need to remove it at the moment
