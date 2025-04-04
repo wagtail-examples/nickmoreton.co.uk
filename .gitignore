@@ -167,8 +167,9 @@ static/
 media/
 webapp/static_compiled/
 .DS_Store
-/dbbackups
+/db_backups
 /fixtures
 /mediabackups
 /.s3cfg
 /bootstrap.sh
+/copy-media.sh
