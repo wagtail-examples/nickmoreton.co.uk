@@ -172,3 +172,4 @@ webapp/static_compiled/
 /mediabackups
 /.s3cfg
 /bootstrap.sh
+/copy-media.sh

@@ -171,9 +171,56 @@ And try uploading again.
 
 Save time with our automated setup script:
 
-[dokku-setup.sh](./docs/files/dokku-setup.sh) Don't forget to modify the SSH key in the script before running it.
+[dokku-setup.sh](./files/dokku-setup.sh) Don't forget to modify the SSH key in the script before running it.
 
 ```bash
 # Ensure to modify ssh-key in the script first
 bash ./docs/files/dokku-setup.sh
 ```
+
+## Getting data and media files into the Dooku app
+
+There's a few ways to do this, but the easiest is to use the provided Makefile commands.
+
+### Copy development data
+
+```bash
+# Copy the development data into the dokku app
+make export-data
+make import-data
+```
+This will copy the data from the local development environment into the dokku app.
+
+The `export-data` command will create a dump of the database to `db_backups`. The `import-data` command will copt the dump into the dokku machine and import it into the database.
+
+### Copy media files
+
+```bash
+# Copy the media files into the dokku app
+make push-dokku-data
+```
+This will create a script `copy-media.sh` which is pushed over to the dokku machine.
+
+You then need to run the script on the dokku machine to copy the files over.
+
+```bash
+# Run the script on the dokku machine
+./copy-media.sh
+```
+This will copy the media files from the local development environment into the dokku app.
+
+If your images are not showing up, you may need to delete renditions using the Django shell
+
+In a console on the dokku machine, run:
+
+```bash
+./manage.py shell
+```
+
+Then run the following commands:
+
+```python
+from wagtail.images.models import Rendition; Rendition.objects.all().delete()
+```
+This will delete all renditions and force Wagtail to regenerate them when the images are accessed again.
+

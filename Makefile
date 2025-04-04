@@ -5,6 +5,10 @@ include .env # this will make the .env file variables available to the Makefile
 DC=docker compose -f docker-compose.yaml
 DC_APP=app
 MANAGE=python manage.py
+# upate this if you change the MACHINE_NAME in /docs/dokku-setup.sh
+DOKKU_MACHINE_NAME=dokku-machine
+# update this if you change the APP_NAME in /docs/dokku-setup.sh
+DOKKU_APP_NAME=myapp
 
 .PHONY: help
 help:
@@ -35,6 +39,7 @@ help:
 	@echo "quickstart     Build and start all (npm & docker)"
 	@echo "requirements   Export requirements.txt (uv)"
 	@echo "start          Build the front end and start local development server (npm)"
+	@echo "make-dokku     Make the dokku machine"
 	@echo ""
 	@echo "Pulling data from Heroku and S3"
 	@echo "============================================================================"
@@ -42,10 +47,21 @@ help:
 	@echo "you can run the 'extract-vars' target to copy the Heroku config vars to .env"
 	@echo "----------------------------------------------------------------------------"
 	@echo "extract-vars   Copy Heroku config vars to .env"
-	@echo "                 update the HEROKU_APP_NAME in the .env file before running"
+	@echo "               update the HEROKU_APP_NAME in the .env file before running"
 	@echo "pull-data      Pull the data from the Heroku database and import it into the local database"
 	@echo "pull-media     Pull the media from the S3 bucket"
 	@echo ""
+	@echo "Pushing data to Dokku"
+	@echo "============================================================================"
+	@echo "push-dokku-data Push the media to the dokku machine"
+	@echo "                run the copy-media.sh script on the dokku machine to copy the media to the dokku app"
+	@echo "                and run the following command in the dokku app shell:"
+	@echo "                from wagtail.images.models import Rendition; Rendition.objects.all().delete()"
+	@echo "                to clear the cached images"
+	@echo "export-data     Export the data from the postgres database to a file"
+	@echo "import-data     Import the data from the file into the postgres database"
+	@echo ""
+	
 
 # Build the containers
 .PHONY: build
@@ -134,11 +150,16 @@ clean:
 	echo; \
 	if [[ $$REPLY =~ ^[Yy]$$ ]]; then \
 		make destroy; \
-		rm -rf ./node_modules ./static ./media ./db_backups db.sqlite3 webapp/static_compiled .s3cfg; \
+		rm -rf ./node_modules ./static ./media ./db_backups db.sqlite3 webapp/static_compiled .s3cfg bootstrap.sh copy-media.sh; \
 		echo "Cleaned up"; \
 	else \
 		echo "Aborted"; \
 	fi
+
+# Make the dokku machine
+.PHONY: make-dokku
+make-dokku:
+	@bash ./docs/files/dokku-setup.sh
 
 # Pull the data using the Heroku CLI and import it into the local database
 .PHONY: pull-data
@@ -175,7 +196,6 @@ import-data:
 pull-media:
 	@if [ -z "$(HEROKU_APP_NAME)" ]; then echo "HEROKU_APP_NAME is not set"; exit 1; fi
 	@$(eval S3CFG=$(PWD)/.s3cfg)
-	@sleep 2 # allow time for the .s3cfg file to be created
 	$(call heroku_to_env,$(HEROKU_APP_NAME))
 	@echo "Pulling media from S3 bucket"
 	@rm -rf media
@@ -186,6 +206,27 @@ pull-media:
 	@$(DC) exec $(DC_APP) $(MANAGE) shell -c "from wagtail.images.models import Rendition; Rendition.objects.all().delete()"
 	@echo "Media pulled from S3 bucket"
 
+.PHONY: push-dokku-data
+push-dokku-data:
+	@echo "Pushing setup to dokku"
+	@PWD=$(PWD)
+	@touch copy-media.sh
+	@echo "#!/bin/bash" > copy-media.sh
+	@echo "WORKDIR=$(WORKDIR)" >> copy-media.sh
+	@echo "DOKKU_APP_NAME=$(DOKKU_APP_NAME)" >> copy-media.sh
+	@echo "cp -r $(WORKDIR)/media/original_images/ ." >> copy-media.sh
+	@echo "cp -r $(WORKDIR)/media/original_images/ /var/lib/dokku/data/storage/myapp/media/" >> copy-media.sh
+	@echo "dokku storage:ensure-directory $(DOKKU_APP_NAME) --chown herokuish" >> copy-media.sh
+	@orbctl push -m $(DOKKU_MACHINE_NAME) copy-media.sh /root/copy-media.sh
+	@orbctl exec -m $(DOKKU_MACHINE_NAME) bash -c 'chmod +x /root/copy-media.sh'
+	@echo "========================================================="
+	@echo "Now run the following command on the dokku machine:"
+	@echo "./copy-media.sh"
+	@echo "Enter the dokku machine with: 'dokku enter $(DOKKU_APP_NAME)' and run the following command:"
+	@echo "./manage.py shell to enter the Django shell"
+	@echo "and run: ./manage.py shell"
+	@echo "and run: from wagtail.images.models import Rendition; Rendition.objects.all().delete()"
+	@echo "========================================================="
 
 # Copy heroku config vars to .env
 # required to run the pull-data and pull-media targets
@@ -201,9 +242,10 @@ define heroku_to_env
     $(eval APP_NAME=$(1))
     @> .env
     @echo "HEROKU_APP_NAME=$(APP_NAME)" >> .env
-	@echo "DOKKU_APP_NAME=$(APP_NAME)-staging" >> .env
     @for var in $(HEROKU_VARS); do \
         echo "$$var" >> .env; \
     done
+	@echo "WORKDIR=$(PWD)" >> .env
+	@echo "DOKKU_MACHINE_NAME=$(DOKKU_MACHINE_NAME)" >> .env
     @echo "Heroku config vars copied to .env for app: $(APP_NAME)"
 endef
