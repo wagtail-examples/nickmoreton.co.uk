@@ -8,18 +8,18 @@ repos:
     hooks:
       - id: black
   - repo: https://github.com/pycqa/flake8
-    rev: 7.1.2
+    rev: 7.2.0
     hooks:
       - id: flake8
   - repo: https://github.com/astral-sh/uv-pre-commit
     # Keep version in sync with your uv package version
-    rev: 0.6.9
+    rev: 0.7.5
     hooks:
       - id: uv-lock # Locks the uv lockfile
       - id: uv-export # Exports the uv lockfile to requirements.txt
         args: [--no-hashes, --no-dev, --output-file, requirements.txt, --locked]
   - repo: https://github.com/adamchainz/django-upgrade
-    rev: "1.23.1"  # replace with latest tag on GitHub
+    rev: "1.25.0"  # replace with latest tag on GitHub
     hooks:
     -   id: django-upgrade
         args: [--target-version, "5.1"]   # Replace with Django version
